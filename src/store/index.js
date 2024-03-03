@@ -9,7 +9,7 @@ export default new Vuex.Store({
     userInfo: null, // 用户信息
     realUserInfo: null, // 实名用户信息
     lastPath: "",
-    imgBaseUrl: "https://cos.ichrecorder.com"
+    imgBaseUrl: "https://cos.ichol.tech"
   },
   getters: {
   },
