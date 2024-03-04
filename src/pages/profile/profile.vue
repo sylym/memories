@@ -21,10 +21,11 @@ export default {
   data() {
     return {
       normalTitle: [
-        {title: "首页", url: "/home"},
-        {title: "数字展馆", url: "/exhibition/exhibitionHome"},
-        {title: "创作者家园", url: "/DigitalArtwork/Work"},                                
-        {title: "我的", url: "/userProfile/userInfo"}
+        { title: "首页", url: "/home" },
+        { title: "非遗星球", url: "/nonHeritagePlanet/nonHeritagePlanet" },
+        { title: "数字展馆", url: "/exhibition/exhibitionHome" },
+        { title: "创作者家园", url: "/DigitalArtwork/Work" },
+        { title: "我的", url: "/userProfile/userInfo" }
       ],
     }
   }
@@ -47,5 +48,4 @@ export default {
     width: 100%;
   }
 }
-
 </style>
