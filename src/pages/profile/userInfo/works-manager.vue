@@ -109,7 +109,7 @@
                         }
                         tag3 = WorkTypeLabelMap[res.data.data[i].content.workType]
                         that.galleryData.push({
-                            imageSrc: that.$store.state.imgBaseUrl + "/%E4%BD%9C%E5%93%81%E7%AE%A1%E7%90%86/logo.png",
+                            imageSrc: res.data.data[i].content.fileUrl,
                             title: res.data.data[i].content.workName,
                             labels: [tag1, tag2, tag3],
                             workId: res.data.data[i].workId
