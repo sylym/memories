@@ -49,7 +49,8 @@ const launchCollection = () => import("../components/collections/launch")  //发
 const collection = () => import("../pages/collections/collection.vue")     //发布藏品路由
 const allCollections = () => import("../components/collections/allCollections")    //所有藏品
 const workDetail = () => import("../pages/statusInfo/statusInfo")  // 个人作品详情
-const rights = ()=> import("../pages/statusInfo/allRights")
+const rights = () => import("../pages/statusInfo/allRights")
+const nonHeritagePlanet = () => import("../pages/nonHeritagePlanet/nonHeritagePlanet") //非遗星球
 const routes = [
   {
     path: '',
@@ -273,7 +274,12 @@ const routes = [
     path: "/workRights",
     component: rights,
     name: "版权通证"
-  }
+  },
+  {
+    path: '/nonHeritagePlanet/nonHeritagePlanet',   //非遗星球
+    component: nonHeritagePlanet,
+    name: "非遗星球"
+  },
 ]
 
 const router = new VueRouter({
@@ -310,7 +316,8 @@ router.beforeEach((to, from, next) => {
     '/DigitalArtwork/Work',
     '/exhibition/allWorks/provinceWorks',
     '/exhibition/allWorks/fengxiangranWorks',
-    '/exhibition/allWorks/detailsWorks'
+    '/exhibition/allWorks/detailsWorks',
+    '/nonHeritagePlanet/nonHeritagePlanet',
   ]
   const isAuthenticated = VueCookies.isKey('token')
   if (!isAuthenticated && noLoginPathList.indexOf(to.path) === -1 ) {
