@@ -1,4 +1,5 @@
 <script setup>
+import RandomTagDialog from '../../components/imageGenerator/RandomTagDialog.vue'
 import Go from './go.vue'
 </script>
 

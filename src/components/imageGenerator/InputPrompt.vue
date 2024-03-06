@@ -24,8 +24,8 @@
     <el-input :autosize="{ minRows: 2, maxRows: 6 }" v-model="negative_prompt" maxlength="1500"
               placeholder="描述图片中不希望出现的内容，多个词用逗号分隔，比如手坏了，眼睛坏了，英文表示比如：bad hands,bad eyes" show-word-limit type="textarea" />
   </div>
-  <el-dialog class="dialogxx" v-model="dialogVisible" append-to-body title="输入图像中希望出现的词">
-    输入希望出现的英词，如果不清楚可以查询<a href="https://aibooru.online" target="_blank">aibooru.online</a>&nbsp;&nbsp;
+  <el-dialog class="dialogxx" :visible.sync="dialogVisible" append-to-body title="输入图像中希望出现的词">
+    输入图片中希望出现的内容，如果不清楚可以查询<a href="https://aibooru.online" target="_blank">aibooru.online</a>&nbsp;&nbsp;
     <a href="https://aitag.top" target="_blank">aitag.top</a> &nbsp;&nbsp;
     <a href="https://wolfchen.top/tag/" target="_blank">wolfchen tag</a>&nbsp;&nbsp; ，或者开启随机抽签随机抽一组词
     <el-tooltip class="box-item" effect="dark" content="随机从aitag.top抽取抽签魔导师魔法" placement="top-start">
@@ -63,7 +63,7 @@ export default {
       negative_prompt: DEFAULT_NAGATIVE_PROMPT,
       randomPrompt: false,
       promptIsShow: true,
-      dialogVisible: true
+      dialogVisible: false
     }
   },
   created() {
