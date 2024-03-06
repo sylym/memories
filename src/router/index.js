@@ -51,6 +51,7 @@ const allCollections = () => import("../components/collections/allCollections") 
 const workDetail = () => import("../pages/statusInfo/statusInfo")  // 个人作品详情
 const rights = () => import("../pages/statusInfo/allRights")
 const nonHeritagePlanet = () => import("../pages/nonHeritagePlanet/nonHeritagePlanet") //非遗星球
+const imageCreation = () => import("../pages/nonHeritagePlanet/imageCreation") //图片创作
 const routes = [
   {
     path: '',
@@ -279,6 +280,11 @@ const routes = [
     path: '/nonHeritagePlanet/nonHeritagePlanet',   //非遗星球
     component: nonHeritagePlanet,
     name: "非遗星球"
+  },
+  {
+    path: '/nonHeritagePlanet/imageCreation',   //图片创作
+    component: imageCreation,
+    name: "图片创作"
   },
 ]
 
