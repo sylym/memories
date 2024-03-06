@@ -1,12 +1,14 @@
 <script setup>
 import ModelInfo from '../../components/imageGenerator/ModelInfo.vue'
 import ImageSize from '../../components/imageGenerator/ImageSize.vue'
+import InputPrompt from '../../components/imageGenerator/InputPrompt.vue'
+import Advanced from '../../components/imageGenerator/Advanced.vue'
 </script>
 
 <template>
   <div class="demo-collapse blink" style="margin-left:10px">
     <ModelInfo />
-    <el-collapse  v-model="conllapseExpand">
+    <el-collapse  v-model="conllapseExpand" >
       <el-collapse-item title="绘画内容描述" name="1">
         <InputPrompt />
       </el-collapse-item>
