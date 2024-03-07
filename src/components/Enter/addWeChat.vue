@@ -4,7 +4,7 @@
   <div class="weChatContent">
     <div class="weChatFrame">
       <p class="chatTip">请发送内容至邮箱以方便进一步沟通</p>
-      <p class="weChatNumber">1216060481@qq.com</p>
+      <p class="weChatNumber">1151652853@qq.com</p>
     </div>
   </div>
 </div>
