@@ -176,6 +176,8 @@
 
 <script>
 
+import * as API from "@/api";
+
 const IMAGE_GET_URL = "https://sdapi.ichol.tech/api/readImage?id="
 
 import { ref } from 'vue'
@@ -271,9 +273,11 @@ export default {
       if (this.isComing) {
         return
       }
-      debugger
       this.isComing = true
-      this.$myFetch('/api/photos', 'POST', { 'size': sizeNum })
+      const userInfo = await API.getUserInfo()
+      this.$store.commit('storageUserInfo', userInfo)
+      console.log(this.$store.state.userInfo.phone)
+      this.$myFetch('/api/photos', 'POST', { 'size': sizeNum, "email": userInfo.phone })
           .then(result => {
             if (result == null) {
               return false
@@ -338,7 +342,6 @@ export default {
               })
           );
     }, shareImageStatus(imgObj, flag) {
-      debugger
       this.$myFetch('/api/share', 'POST', { id: imgObj.image_tag_md5_id, flag: flag })
           .then((data) => {
             if (data.code == 200 && data.flag) {

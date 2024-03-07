@@ -34,8 +34,7 @@ import Go from './go.vue'
           </el-aside>
         </el-col>
         <el-col :span="7">
-          <!-- <el-progress :percentage="processCount" :format="processTabFormat" /> -->
-          <el-progress :percentage="processCount" :stroke-width="12" striped striped-flow :duration="duration"
+          <el-progress :percentage=processCount :stroke-width="12" striped striped-flow :duration="duration"
                        :format="processTabFormat" color="#e6a23c" />
         </el-col>
       </el-row>
@@ -46,6 +45,7 @@ import Go from './go.vue'
 
 <script>
 import jyTabBar from "@/components/tabbar/jyTabbar/jyTabBar";
+import * as API from '@/api'
 const processTabFormat = (percentage) => (`还剩${percentage}%图片未浏览`)
 
 export default {
@@ -74,39 +74,32 @@ export default {
   mounted: function () {
     this.setPage()
     this.$bus1.$on('setPageProgress', (data) => {
-      this.processCount = (100 - ((data.pageNum / data.totalSize) * 100)).toFixed(2)
+      this.processCount = (100 - ((data.pageNum / data.totalSize) * 100)).toFixed(2) * 100
     });
   },
   methods: {
     setPage() {
-
+      this.imageCreationRegister()
     },
     handleSelect(index) {
       this.$router.push(index);
     },
-  },
-  imageCreationRegister() {
-    this.$myFetch('/api/reg', 'POST', {JSON.stringify(signupData)})
-        .then(response => response.json())
+    async imageCreationRegister() {
+      const userInfo = await API.getUserInfo()
+      this.$myFetch('/api/reg', 'POST', {
+        "email": userInfo.phone,
+        "password": userInfo.username
+      })
         .then(data => {
-          if (data.code === 1) {
-            // localStorage.setItem('token', data.token)
-            this.$cookies.set("token", data.token,{expires: 1}); //方法到cookie方便校验
-            localStorage.setItem('userid', signupData.email) //放到Storage安全
-            this.dialogVisible = false
-            this.$bus1.emit("SelectPageRefresh", {});
-            ElMessage({ message: '注册成功.', type: 'success' })
-          } else if (data.code === 2) {
-            ElMessage({ message: '邮箱' + this.signupForm.email + '已被注册，请检查.', type: 'warning' })
-          } else {
-            // handle signup failure
-            ElMessage({ message: '失败.', type: 'error' })
+          if (data.code === -1) {
+            console.error(data.msg)
+          }
+          else {
+            console.log(data.msg)
           }
         })
-        .catch(error => {
-          // handle error
-        })
-  }
+    }
+  },
 };
 
 </script>

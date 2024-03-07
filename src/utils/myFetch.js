@@ -43,13 +43,11 @@ let myFetch = async function (urlpath, methodx, body, ContentType) {
         'Content-Type': 'text/plan; charset=utf-8',
     }
     let nbody = {}
-    console.log('inbody', body)
     if (body == null || body === undefined || isEmptyObject(body)){
         nbody = {}
     } else {
         nbody = encryptJsonToStr(body)
     }
-    console.log('allbody', nbody)
 
     const response = await axio({
         url: urlpath,
