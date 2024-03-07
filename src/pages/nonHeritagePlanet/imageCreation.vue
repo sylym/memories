@@ -1,5 +1,6 @@
 <script setup>
 import RandomTagDialog from '../../components/imageGenerator/RandomTagDialog.vue'
+import Album from '../../components/imageGenerator/Album.vue'
 import Go from './go.vue'
 </script>
 
@@ -84,6 +85,28 @@ export default {
       this.$router.push(index);
     },
   },
+  imageCreationRegister() {
+    this.$myFetch('/api/reg', 'POST', {JSON.stringify(signupData)})
+        .then(response => response.json())
+        .then(data => {
+          if (data.code === 1) {
+            // localStorage.setItem('token', data.token)
+            this.$cookies.set("token", data.token,{expires: 1}); //方法到cookie方便校验
+            localStorage.setItem('userid', signupData.email) //放到Storage安全
+            this.dialogVisible = false
+            this.$bus1.emit("SelectPageRefresh", {});
+            ElMessage({ message: '注册成功.', type: 'success' })
+          } else if (data.code === 2) {
+            ElMessage({ message: '邮箱' + this.signupForm.email + '已被注册，请检查.', type: 'warning' })
+          } else {
+            // handle signup failure
+            ElMessage({ message: '失败.', type: 'error' })
+          }
+        })
+        .catch(error => {
+          // handle error
+        })
+  }
 };
 
 </script>

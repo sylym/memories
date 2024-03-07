@@ -31,22 +31,31 @@ axio.interceptors.request.use(function (config) {
     return Promise.reject(err);
 })
 
+function isEmptyObject(obj){
+    for(var key in obj){
+        return false;
+    }
+    return true;
+}
+
 let myFetch = async function (urlpath, methodx, body, ContentType) {
     let header = {
         'Content-Type': 'text/plan; charset=utf-8',
     }
     let nbody = {}
-    if (body == {} || body == null || body === undefined) {
+    console.log('inbody', body)
+    if (body == null || body === undefined || isEmptyObject(body)){
         nbody = {}
     } else {
         nbody = encryptJsonToStr(body)
     }
+    console.log('allbody', nbody)
 
     const response = await axio({
         url: urlpath,
         method: methodx,
         headers: header,
-        body: nbody
+        data: nbody
     })
     return decryptStrToJson(response)
 }

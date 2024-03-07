@@ -127,6 +127,9 @@ export default {
       this.$myFetch('/api/getCheckModelList', 'POST', null)
           .then((data) => {
             this.cardList = this.orderList(data)
+            this.cardList.forEach((item, index) => {
+              item.selected = index === 0;
+            });
           })
           .catch(error => console.error(error));
     },
