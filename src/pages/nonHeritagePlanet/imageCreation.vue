@@ -87,8 +87,8 @@ export default {
     async imageCreationRegister() {
       const userInfo = await API.getUserInfo()
       this.$myFetch('/api/reg', 'POST', {
-        "email": userInfo.phone,
-        "password": userInfo.username
+        "email": userInfo.username,
+        "password": userInfo.phone
       })
         .then(data => {
           if (data.code === -1) {

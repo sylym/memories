@@ -276,8 +276,8 @@ export default {
       this.isComing = true
       const userInfo = await API.getUserInfo()
       this.$store.commit('storageUserInfo', userInfo)
-      console.log(this.$store.state.userInfo.phone)
-      this.$myFetch('/api/photos', 'POST', { 'size': sizeNum, "email": userInfo.phone })
+
+      this.$myFetch('/api/photos', 'POST', { 'size': sizeNum, "email": this.$store.state.userInfo.username })
           .then(result => {
             if (result == null) {
               return false
@@ -310,14 +310,14 @@ export default {
     }, star(id) {
       this.$message.success('加油!!!');
       this.isStaring = true
-      this.$myFetch('/api/star', 'POST', { id: id })
+      this.$myFetch('/api/star', 'POST', { id: id, email: this.$store.state.userInfo.username })
           .then((data) => {
             this.isStaring = false
             this.$refs['star_' + id][0].innerHTML = data.starNum
           })
           .catch(error => console.error(error));
     }, deleteImage(index, id, user_id) {
-      this.$myFetch('/api/deleteImage', 'POST', { id: id })
+      this.$myFetch('/api/deleteImage', 'POST', { id: id, email: this.$store.state.userInfo.username })
           .then((data) => {
             if (data.code == 200 && data.flag) {
               this.images.splice(index, 1)
@@ -342,7 +342,7 @@ export default {
               })
           );
     }, shareImageStatus(imgObj, flag) {
-      this.$myFetch('/api/share', 'POST', { id: imgObj.image_tag_md5_id, flag: flag })
+      this.$myFetch('/api/share', 'POST', { id: imgObj.image_tag_md5_id, flag: flag, email: this.$store.state.userInfo.username })
           .then((data) => {
             if (data.code == 200 && data.flag) {
               if (data.flag) {
