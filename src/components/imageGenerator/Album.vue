@@ -1,27 +1,26 @@
 <template>
   <div>
   <el-row :gutter="16">
-    <el-col :span="24" style="padding-left: 3vw;">
-        <el-card v-for="(image, index) in images" :key="index" class="box-card"
-                 :body-style="{ padding: '20px', width: '210px' }">
+    <el-col :span="25" v-for="(image, index) in images" :key="index" style="padding-left: 3vw;">
+        <el-card :body-style="{ padding: '20px', width: '240px' }">
           <el-tooltip class="box-item" effect="dark" content="删除" placement="bottom-end">
-            <el-button v-show="image.imageData.self == 1" type="danger" icon="delete" circle
+            <el-button v-show="image.imageData.self == 1" type="danger" icon="el-icon-delete" circle
                        @click="deleteImage(index, image.image_tag_md5_id, image.imageData.user_id)" style=""
                        class="deleteButton" />
           </el-tooltip>
 
-          <el-popconfirm confirm-button-text="确定" cancel-button-text="不" :icon="InfoFilled"
+          <el-popconfirm confirm-button-text="确定" cancel-button-text="不" icon="el-icon-info"
                          icon-color="#626AEF" title="共享后其他人都能看见你的图片，确定共享的图片不包含色情、政治、暴力内容?" @confirm="shareImageStatus(image.imageData, 1)"
                          @cancel="cancelEvent">
             <template #reference>
-              <el-button v-show="image.imageData.self == 1 &&  image.imageData.share == 0" type="warning" icon="share"
+              <el-button v-show="image.imageData.self == 1 &&  image.imageData.share == 0" type="warning" icon="el-icon-share"
                          style="" class="shareButton" >共享</el-button>
             </template>
           </el-popconfirm>
 
           <el-tooltip class="box-item" effect="dark" content="图片已共享，所有人都能看见，点击取消共享" placement="bottom-end">
             <el-button v-show="image.imageData.self == 1 && image.imageData.share == 1" type="warning"
-                       icon="CloseBold" circle @click="shareImageStatus(image.imageData, 0)" style=""
+                       icon="el-icon-close" circle @click="shareImageStatus(image.imageData, 0)" style=""
                        class="shareButton" />
           </el-tooltip>
 
@@ -39,20 +38,20 @@
               <div style="display:none" :ref="'prompts_' + image.image_tag_md5_id">{{ image.strPrompt }}</div>
               <div class="bottom">
                 <el-tooltip class="box-item" effect="dark" content="拷贝关键词" placement="bottom-end">
-                  <el-button type="primary" icon="CopyDocument" circle
+                  <el-button type="primary" icon="el-icon-copy-document" circle
                              @click="copyPrompt(image.image_tag_md5_id)" style="margin-left: 20px;" />
                 </el-tooltip>
                 <el-tooltip class="box-item" effect="dark" content="下载图片" placement="bottom-end">
-                  <el-button type="primary" icon="Download" circle
+                  <el-button type="primary" icon="el-icon-download" circle
                              @click="downloadImg(image.image_tag_md5_id)" style="margin-left: 20px;" />
                 </el-tooltip>
                 <el-tooltip class="box-item" effect="dark" content="将该图片描绘词复制到 <br/>'希望出现的内容中'" raw-content
                             placement="bottom">
-                  <el-button type="primary" icon="MagicStick" circle @click="copyToInput(image.imageData)"
+                  <el-button type="primary" icon="el-icon-magic-stick" circle @click="copyToInput(image.imageData)"
                              style="margin-left: 20px;" />
                 </el-tooltip>
                 <el-tooltip class="box-item" effect="dark" content="点赞" placement="bottom-end">
-                  <el-button type="warning" icon="Star" circle @click="star(image.image_tag_md5_id)"
+                  <el-button type="warning" icon="el-icon-star-off" circle @click="star(image.image_tag_md5_id)"
                              style="margin-left: 20px;" />
                 </el-tooltip>
                 <span :ref="'star_' + image.image_tag_md5_id">{{ image.starview }}</span>
@@ -73,20 +72,25 @@
 
 <style scoped>
 .deleteButton {
-  margin-left: 4px;
-  padding-top: 40px;
-  margin-top: -30px;
+  margin-left: -130px;
+  margin-top: -34px;
   position: absolute;
+  padding: 5px;
+
 }
 
 .shareButton {
-  margin-left: 50px;
-  padding-top: 40px;
-  margin-top: -30px;
+  margin-left: -90px;
+  margin-top: -34px;
   position: absolute;
+  padding: 5px;
+
 }
 
-
+.el-button {
+  padding: 7px;
+  min-height: auto;
+}
 
 .shadow {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -138,6 +142,13 @@
   padding-top: 20px;
 }
 
+.el-col {
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .time {
   font-size: 12px;
   color: #999;
@@ -150,11 +161,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.button {
-  padding: 0;
-  min-height: auto;
 }
 
 
