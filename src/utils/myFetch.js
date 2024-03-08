@@ -5,7 +5,7 @@ import VueCookies from "vue-cookies";
 
 const axio = axios.create({
     baseURL: 'https://sdapi.ichol.tech',
-    timeout: 10000
+    timeout: 100000000
 })
 
 axio.interceptors.response.use(function(response) {

@@ -1,23 +1,25 @@
 <template>
-  <el-drawer :visible.sync="createImageDialog" size="70%" title="正在生成中..." :direction="createImageDialogType"  :modal-append-to-body='false' >
-    <span>请稍等..</span>
-    <el-image style="width: 70%; height: 70%;" :src="generateImageSrc" :zoom-rate="1.7"
-              :preview-src-list="generateImageSrcList" :initial-index="4" fit="contain">
-      <template #error>
-        <div class="image-slot">
-          <el-icon><icon-picture /></el-icon>
-        </div>
-      </template>
+  <el-dialog :visible.sync="createImageDialog" custom-class="imageDialog"  title="正在生成中..." :modal-append-to-body='false' :before-close="closeDialog">
+    <el-image style="position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%);"  :src="generateImageSrc" >
+      <div slot="error" class="image-slot">
+        <i class="el-icon-picture-outline"></i>
+      </div>
     </el-image>
     <el-progress class="progresscss" :percentage="processCount" :format="processTabFormat" />
-    <el-button type="primary" style="margin-left: 16px;cursor: pointer;" @click="closeDialog"
-               size="large">关闭</el-button>
-  </el-drawer>
+  </el-dialog>
 </template>
 <style scoped>
+
+::v-deep .imageDialog{
+  width: 600px;
+  height: 600px;
+  position: relative;
+}
+
 .progresscss {
-  width: 95vw;
-  padding-left: 70px;
+  position: absolute;
+  bottom: 0;
+  width: 90%;
 }
 </style>
 <script>
@@ -39,7 +41,6 @@ export default {
   data() {
     return {
       createImageDialog: false,
-      createImageDialogType: "ttb",
       handleCloseCreateImage: handleCloseCreateImage,
       processTabFormat: processTabFormat,
       processCount: 100,
