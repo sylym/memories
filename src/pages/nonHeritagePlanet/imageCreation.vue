@@ -1,6 +1,7 @@
 <script setup>
 import RandomTagDialog from '../../components/imageGenerator/RandomTagDialog.vue'
 import Album from '../../components/imageGenerator/Album.vue'
+import DialogShowImage from '../../components/imageGenerator/DialogShowImage.vue'
 import Go from './go.vue'
 </script>
 
