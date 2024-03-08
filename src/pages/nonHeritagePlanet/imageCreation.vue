@@ -2,6 +2,8 @@
 import RandomTagDialog from '../../components/imageGenerator/RandomTagDialog.vue'
 import Album from '../../components/imageGenerator/Album.vue'
 import DialogShowImage from '../../components/imageGenerator/DialogShowImage.vue'
+import GenerateDialog from '../../components/imageGenerator/GenerateDialog.vue'
+import GenerateBtn from '../../components/imageGenerator/Generate.vue'
 import Go from './go.vue'
 </script>
 
@@ -34,7 +36,7 @@ import Go from './go.vue'
             <GenerateDialog />
           </el-aside>
         </el-col>
-        <el-col >
+        <el-col :span="17">
           <el-progress :percentage=processCount :stroke-width="12" striped striped-flow :duration="duration"
                        :format="processTabFormat" color="#e6a23c" />
         </el-col>
@@ -87,7 +89,8 @@ export default {
     this.setPage()
     this.$bus1.$on('setPageProgress', (data) => {
       this.processCount = Math.floor(100 - (((data.pageNum + 4) / data.totalSize) * 100))
-      if (this.processCount <= 0) {
+      if (this.processCount <= 0){
+        this.processCount = 0
         this.$message.warning('已经加载全部图片了!!!');
         this.disabled = true
       }

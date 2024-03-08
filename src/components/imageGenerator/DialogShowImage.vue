@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="imgageShowDialogVisible" append-to-body="true" title="图片预览" width="60vw" center>
+  <el-dialog :visible.sync="imgageShowDialogVisible" :append-to-body="true" title="图片预览" width="60vw" center>
     <div>
       <el-container>
         <el-aside class="imgageShowDialogBox">
