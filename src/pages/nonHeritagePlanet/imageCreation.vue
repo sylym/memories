@@ -16,12 +16,12 @@ import Go from './go.vue'
       <!-- 侧边栏内容 -->
       <Go />
     </el-aside>
-    <el-main class="main">
+    <el-main class="main" v-infinite-scroll="callChildloadMore" infinite-scroll-delay="500" infinite-scroll-distance="50" :infinite-scroll-disabled='disabled' :style="contentStyleObj">
       <!-- 主要内容 -->
       <el-backtop :bottom="100" target=".el-main" :visibility-height="200">
         返回顶部
       </el-backtop>
-      <Album />
+      <Album ref="child"></Album>
       <DialogShowImage />
     </el-main>
     <el-footer class="footer">
@@ -33,7 +33,7 @@ import Go from './go.vue'
             <GenerateDialog />
           </el-aside>
         </el-col>
-        <el-col :span="7">
+        <el-col >
           <el-progress :percentage=processCount :stroke-width="12" striped striped-flow :duration="duration"
                        :format="processTabFormat" color="#e6a23c" />
         </el-col>
@@ -46,7 +46,7 @@ import Go from './go.vue'
 <script>
 import jyTabBar from "@/components/tabbar/jyTabbar/jyTabBar";
 import * as API from '@/api'
-const processTabFormat = (percentage) => (`还剩${percentage}%图片未浏览`)
+const processTabFormat = (percentage) => (`还剩${percentage}%图片未加载`)
 
 export default {
   name: 'imageCreation',
@@ -68,21 +68,45 @@ export default {
       pageTotal: 100,
       pageSize: 10,
       processTabFormat: processTabFormat,
-      page: 1
+      page: 1,
+      disabled:false,
+      contentStyleObj: {
+        height: ''
+      }
     }
+  },
+  created() {
+    this.getHight()
+    window.addEventListener('resize', this.getHight);
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.getHight)
   },
   mounted: function () {
     this.setPage()
     this.$bus1.$on('setPageProgress', (data) => {
-      this.processCount = (100 - ((data.pageNum / data.totalSize) * 100)).toFixed(2) * 100
+      this.processCount = Math.floor(100 - (((data.pageNum + 4) / data.totalSize) * 100))
+      if (this.processCount <= 0) {
+        this.$message.warning('已经加载全部图片了!!!');
+        this.disabled = true
+      }
     });
   },
   methods: {
     setPage() {
       this.imageCreationRegister()
     },
+    getHight(){
+      this.contentStyleObj.height = window.innerHeight - 100 + 'px'
+      console.log(this.contentStyleObj.height)
+    },
     handleSelect(index) {
       this.$router.push(index);
+    },
+    callChildloadMore () {
+      this.disabled = true
+      this.$refs.child.loadMore() // 调用子组件的方法
+      this.disabled = false
     },
     async imageCreationRegister() {
       const userInfo = await API.getUserInfo()
@@ -184,7 +208,10 @@ a:hover {
 .el-progress {
   margin-top: 15px;
   margin-bottom: 20px;
-  width: 350px;
+  width: 220px;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
 }
 
 .header {
@@ -201,7 +228,7 @@ a:hover {
 
 .aside {
   position: fixed;
-  left: 0;
+  left: 5px;
   top: 50px;
   bottom: 60px;
   /* 头部高度 */
@@ -210,13 +237,13 @@ a:hover {
 }
 
 .main {
+  position: fixed;
   overflow-y: auto;
-  margin-left: 350px;
+  margin-left: 300px;
   /* 侧边栏宽度 */
   margin-top: 50px;
   /* 头部高度 */
   margin-bottom: 50px;
-  /* 底部高度 */
 }
 
 .footer {
