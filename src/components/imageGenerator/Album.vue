@@ -2,7 +2,7 @@
   <div >
   <el-row :gutter="16">
     <el-col :span="25" v-for="(image, index) in images" :key="index" style="padding-left: 2vw;">
-        <el-card :body-style="{ padding: '20px', width: '240px' }">
+        <el-card :body-style="{ padding: '20px', width: '240px', height: '340px'}">
           <el-tooltip class="box-item" effect="dark" content="删除" placement="bottom-end">
             <el-button v-show="image.imageData.self == 1" type="danger" icon="el-icon-delete" circle
                        @click="deleteImage(index, image.image_tag_md5_id, image.imageData.user_id)" style=""
@@ -28,7 +28,7 @@
             <el-image name="test" lazy :ref="'image_' + image.image_tag_md5_id" class="album-image shadow"
                       :key="index" style="text-align: center; cursor: pointer;" :src="image.url" :zoom-rate="1.2"
                       :initial-index="4" fit="cover" :error="handleImageError" :hide-on-click-modal="false"
-                      :z-index="22" @click="showImageDialog(image.imageData)" />
+                      :z-index="22" @click.native="showImageDialog(image.imageData)" />
 
             <div style="padding: 14px">
 
@@ -54,7 +54,7 @@
                   <el-button type="warning" icon="el-icon-star-off" circle @click="star(image.image_tag_md5_id)"
                              style="margin-left: 20px;" />
                 </el-tooltip>
-                <span :ref="'star_' + image.image_tag_md5_id">{{ image.starview }}</span>
+                <span :ref="'star_' + image.image_tag_md5_id" style="margin-left: 10px;">{{ image.starview }}</span>
               </div>
             </div>
           </div>
@@ -68,9 +68,9 @@
 .deleteButton {
   margin-left: -130px;
   margin-top: -34px;
-  position: absolute;
   padding: 5px;
-
+  position: absolute;
+  z-index: 9999;
 }
 
 .shareButton {
@@ -78,7 +78,7 @@
   margin-top: -34px;
   position: absolute;
   padding: 5px;
-
+  z-index: 9999;
 }
 
 .el-button {
@@ -143,18 +143,22 @@
   margin-bottom: 20px;
 }
 
+.el-card{
+  position: relative;
+  overflow: visible;
+}
+
 .time {
   font-size: 12px;
   color: #999;
 }
 
 .bottom {
-  margin-left: -30px;
-  margin-top: 13px;
-  line-height: 12px;
-  display: flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  bottom: 3%;
+  transform: translateX(-11px);
 }
 
 
@@ -290,7 +294,7 @@ export default {
           })
     },
     loadMore() {
-      let sizeNum = parseInt(this.photos.pageNum) + 4
+      let sizeNum = parseInt(this.photos.pageNum) + 5
       this.loadPhotos(sizeNum);
     }
     ,
