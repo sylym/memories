@@ -20,7 +20,7 @@
     </div>
   </div>
   <p class="center">
-    云 织 非 遗
+    <img :src="`https://s11.ax1x.com/2024/03/04/pFDVe2T.png`" alt="云织非遗" style="width: 220px;object-fit: cover">
   </p>
   <div class="right" id="font">
     <p>联系我们</p>
