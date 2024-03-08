@@ -246,7 +246,7 @@ export default {
 @import "../../assets/css/DigitalArtwork/DigitalArtwork.css";
 
 .content {
-  background-image: url('https://s21.ax1x.com/2024/03/07/pFskJxO.jpg');
+  background-image: url('https://s21.ax1x.com/2024/03/08/pFsNVKg.png');
   background-size: contain; /* 让背景图片充满整个容器 */
   background-position: left center; /* 让背景图片在容器中居中显示 */
   background-repeat: no-repeat; /* 禁止背景图片重复 */
