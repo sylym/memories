@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div >
   <el-row :gutter="16">
-    <el-col :span="25" v-for="(image, index) in images" :key="index" style="padding-left: 3vw;">
+    <el-col :span="25" v-for="(image, index) in images" :key="index" style="padding-left: 2vw;">
         <el-card :body-style="{ padding: '20px', width: '240px' }">
           <el-tooltip class="box-item" effect="dark" content="删除" placement="bottom-end">
             <el-button v-show="image.imageData.self == 1" type="danger" icon="el-icon-delete" circle
@@ -59,12 +59,6 @@
             </div>
           </div>
         </el-card>
-    </el-col>
-  </el-row>
-  <el-row :gutter="16" v-show="showMore">
-    <el-col :span="20" :offset="3">
-      <el-button @mouseover="loadMore" type="primary"
-                 style="width:50vw;height:70px;cursor: pointer;">鼠标移到这里加载更多...</el-button>
     </el-col>
   </el-row>
   </div>
@@ -199,7 +193,6 @@ export default {
       load: () => {
         this.count += 2
       },
-      showMore: true,
       isStaring: false,
       isComing: false
 
@@ -291,20 +284,13 @@ export default {
             this.isComing = false
             this.photos = result;
             for (let i = 0; i < this.photos.rows.length; i++) {
-              console.log(this.photos.rows[i].url)
               this.addImagesList(this.photos.rows[i])
             }
-            if (this.photos.rows.length == 0) {
-              this.showMore = false
-              this.$message.warning('已经到底部了!!!');
-              this.$bus1.$emit('setPageProgress', { pageNum: 1, totalSize: 1 });
-            } else {
-              this.$bus1.$emit('setPageProgress', { pageNum: this.photos.pageNum, totalSize: this.photos.totalSize });
-            }
+            this.$bus1.$emit('setPageProgress', { pageNum: this.photos.pageNum, totalSize: this.photos.totalSize });
           })
     },
     loadMore() {
-      let sizeNum = parseInt(this.photos.pageNum) + 10
+      let sizeNum = parseInt(this.photos.pageNum) + 4
       this.loadPhotos(sizeNum);
     }
     ,
