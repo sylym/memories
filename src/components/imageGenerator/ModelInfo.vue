@@ -6,8 +6,8 @@
   <div class="card-container">
       <el-card v-for="(item, index) in cardList.slice(0, 2)" :key="index" :class="{ 'selected': item.selected }"
                @click.native="selectCard(index)">
-        <div
-            :style="{ 'background-image': `url(${serverAddr}/api/getModelImg?mid=${item.number})`, 'background-size': 'cover', 'width': '100px', 'height': '50px' }">
+        <div class="card-image"
+            :style="{ 'background-image': `url(${serverAddr}/api/getModelImg?mid=${item.number})`}">
         </div>
         <div class="card-content" v-if="!item.selected">
         </div>
@@ -20,8 +20,8 @@
                 <div class="card-container">
                     <el-card v-for="(item, index) in cardList.slice(2, 99)" :key="index"
                              :class="{ 'selected': item.selected }" @click.native="selectCard(index + 2)">
-                        <div
-                            :style="{ 'background-image': `url(${serverAddr}/api/getModelImg?mid=${item.number})`, 'background-size': 'cover', 'width': '100px', 'height': '50px' }">
+                        <div class="card-image"
+                            :style="{ 'background-image': `url(${serverAddr}/api/getModelImg?mid=${item.number})`}">
                         </div>
                         <div class="card-content" v-if="!item.selected">
                         </div>
@@ -263,19 +263,20 @@ export default {
 
 .card-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0 auto;
+  padding: 20px;
 }
 
 .el-card {
   width: 100px;
   height: 100px;
   border-radius: 10px;
-  text-align: center;
   --el-card-padding: 0px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   border: 2px solid rgba(232, 232, 232, 0);
+  position: relative;
 }
 
 .el-card.selected {
@@ -288,9 +289,12 @@ export default {
 }
 
 .card-title {
+  position: absolute;
   word-wrap: break-word;
-  padding-top: 15px;
-  font-size: 12px;
+  left: 50%;
+  top: 90%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
 }
 
 .card-content {
@@ -302,4 +306,15 @@ export default {
   color: #fff;
   font-size: 14px;
 }
+
+.card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background-size: cover;
+  z-index: 1;
+}
+
 </style>
