@@ -1,26 +1,42 @@
 <template>
-  <el-dialog :visible.sync="createImageDialog" custom-class="imageDialog"  title="正在生成中..." :modal-append-to-body='false' :before-close="closeDialog">
-    <el-image style="position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%);"  :src="generateImageSrc" >
-      <div slot="error" class="image-slot">
-        <i class="el-icon-picture-outline"></i>
-      </div>
-    </el-image>
-    <el-progress class="progresscss" :percentage="processCount" :format="processTabFormat" />
+  <el-dialog :visible.sync="createImageDialog" title="正在生成中..." :modal-append-to-body='false' :before-close="closeDialog">
+    <div>
+      <el-container>
+        <el-main class="imgageShowDialogBox">
+          <el-image  :src="generateImageSrc" :preview-src-list="generateImageSrcList" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);border-radius: 2%;" >
+            <div slot="error" class="image-slot">
+              <i class="el-icon-picture-outline"></i>
+            </div>
+          </el-image>
+        </el-main>
+        <el-progress :text-inside="true" :stroke-width="26" class="progresscss" :percentage="processCount" :format="processTabFormat" />
+      </el-container>
+    </div>
   </el-dialog>
 </template>
 <style scoped>
-
-::v-deep .imageDialog{
-  width: 600px;
-  height: 600px;
-  position: relative;
-}
 
 .progresscss {
   position: absolute;
   bottom: 0;
   width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
 }
+
+.imgageShowDialogBox {
+  color: #854040;
+  border-radius: 20px;
+  border: 2px dashed #ccc;
+  background-color: #f2f2f2;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
 </style>
 <script>
 

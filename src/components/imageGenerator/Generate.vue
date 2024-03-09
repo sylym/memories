@@ -147,7 +147,7 @@ export default {
             if (resultData === "userError") {
               this.resetButton();
               this.$bus1.$emit("generateDialogProcessDestroy");
-              this.$message.error('图片种子重复');
+              this.$message.error('图片重复');
               return
             }
             //到这里不是运行状态说明被提前终止，这里就需要直接返回不再继续
