@@ -30,10 +30,9 @@
                       :initial-index="4" fit="cover" :error="handleImageError" :hide-on-click-modal="false"
                       :z-index="22" @click.native="showImageDialog(image.imageData)" />
 
-            <div style="padding: 14px">
+            <div >
 
-                            <span class="time text-ellipsis">{{ image.strPromptShort
-                              }}</span>
+              <span class="time text-ellipsis">{{ image.strPromptShort }}</span>
               <div class="time">图片种子：{{ image.seed }}</div>
               <div style="display:none" :ref="'prompts_' + image.image_tag_md5_id">{{ image.strPrompt }}</div>
               <div class="bottom">
@@ -130,6 +129,7 @@
   border-radius: 7px;
   margin-bottom: 10px;
   flex-basis: 25%;
+  max-height: 225px;
 }
 
 .el-row {
@@ -158,7 +158,7 @@
   align-items: center;
   position: absolute;
   bottom: 3%;
-  transform: translateX(-11px);
+  transform: translateX(-1px);
 }
 
 
