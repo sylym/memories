@@ -1,13 +1,13 @@
 <template>
-  <el-dialog :visible.sync="imgageShowDialogVisible" :append-to-body="true" title="图片预览" width="60vw" center>
+  <el-dialog :visible.sync="imgageShowDialogVisible" :append-to-body="true" title="图片预览" center>
     <div>
       <el-container>
-        <el-aside class="imgageShowDialogBox">
+        <el-main class="imgageShowDialogBox">
           <el-image name="test" lazy class="album-image shadow"
-                    style="height: calc(100% - 60px); cursor: pointer; user-select: none; box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);border-radius: 2%;"
-                    :src="imageurl" :zoom-rate="0.4" :initial-index="1" fit="cover" :hide-on-click-modal="true"
+                    style=" cursor: pointer; user-select: none; box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);border-radius: 2%;"
+                    :src="imageurl" :initial-index="1" :hide-on-click-modal="true"
                     :z-index="22" />
-        </el-aside>
+        </el-main>
         <el-main class="imgageShowDialogBox2">
           <div class="imgageShowDialogDiv">
             图片名称/备注:
@@ -143,11 +143,10 @@ export default {
 }
 
 .el-main {
-  height: 70vh
+
 }
 
 .imgageShowDialogBox {
-  width: 40vw;
   color: #854040;
   border-radius: 20px;
   border: 2px dashed #ccc;
@@ -160,7 +159,8 @@ export default {
 }
 
 .imgageShowDialogBox2 {
-  margin-left: 20px;
+  width: 20vw;
+  margin-left: 1vw;
   border-radius: 10px;
   color: #854040;
   border: 2px dashed #ccc;
@@ -171,7 +171,6 @@ export default {
   word-wrap: break-word;
   word-break: break-all;
 }
-
 .el-dialog__body {
   color: #854040;
 }</style>
