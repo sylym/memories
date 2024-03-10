@@ -51,6 +51,8 @@ const allCollections = () => import("../components/collections/allCollections") 
 const workDetail = () => import("../pages/statusInfo/statusInfo")  // 个人作品详情
 const rights = () => import("../pages/statusInfo/allRights")
 const nonHeritagePlanet = () => import("../pages/nonHeritagePlanet/nonHeritagePlanet") //非遗星球
+const GptPage = () => import("../pages/ChatBot/ChatPage") // 对话问答界面
+
 const routes = [
   {
     path: '',
@@ -280,6 +282,11 @@ const routes = [
     component: nonHeritagePlanet,
     name: "非遗星球"
   },
+  {
+    path: '/nonHeritagePlanet/QuestionAndAnswer',
+    component: GptPage,
+    name: "对话问答"
+  }
 ]
 
 const router = new VueRouter({
