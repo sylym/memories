@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="createImageDialog" title="正在生成中...（切换绘画风格后首次生成图片会出现进度条卡顿，请耐心等待）" :modal-append-to-body='false' :before-close="closeDialog">
+  <el-dialog :visible.sync="createImageDialog" title="正在生成中..." :modal-append-to-body='false' :before-close="closeDialog">
     <div>
       <el-container>
         <el-main class="imgageShowDialogBox">
