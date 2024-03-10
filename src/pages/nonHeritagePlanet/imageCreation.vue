@@ -51,6 +51,7 @@ import Go from './go.vue'
 <script>
 import jyTabBar from "@/components/tabbar/jyTabbar/jyTabBar";
 import * as API from '@/api'
+import {MessageBox} from "element-ui";
 const processTabFormat = (percentage) => (`还剩${percentage}%图片未加载`)
 
 export default {
@@ -83,12 +84,12 @@ export default {
   created() {
     this.getHight()
     window.addEventListener('resize', this.getHight);
+    this.setPage()
   },
   destroyed() {
     window.removeEventListener('resize', this.getHight)
   },
   mounted: function () {
-    this.setPage()
     this.$bus1.$on('setPageProgress', (data) => {
       this.processCount = Math.floor(100 - (((data.pageNum + 4) / data.totalSize) * 100))
       if (this.processCount <= 0){
@@ -101,6 +102,7 @@ export default {
   methods: {
     setPage() {
       this.imageCreationRegister()
+      this.check()
     },
     getHight(){
       this.contentStyleObj.height = window.innerHeight - 100 + 'px'
@@ -113,6 +115,30 @@ export default {
       this.disabled = true
       this.$refs.child.loadMore() // 调用子组件的方法
       this.disabled = false
+    },
+    check() {
+      this.$myFetch('/api/checkx','POST', null)
+          .then(data => {
+            if (data.warring != "") {
+              MessageBox.alert(data.warring, '使用警告', {
+                confirmButtonText: '我同意及希望继续使用',
+                showClose: false,
+                type: 'warning',
+                callback: () => {
+                  // this.$bus1.emit("setElCollapseExpand", {})
+                }
+              })
+            }
+            if (data.ol !== 1) {
+              this.$message({
+                showClose: true,
+                message: '服务器已离线，无法使用图片生成功能',
+                type: 'error',
+              })
+            }
+          }).catch(error => {
+        // handle error
+      })
     },
     async imageCreationRegister() {
       const userInfo = await API.getUserInfo()
