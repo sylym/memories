@@ -1,6 +1,6 @@
 <template>
   <div>
-  <el-tooltip class="box-item" effect="dark" content="说出你想要画的内容，说的越详细图画越近似，可以通过拆成多个描述词以逗号分割进行描述" placement="top-start">
+  <el-tooltip class="box-item" effect="dark" content="选择你需要的绘画风格" placement="top-start">
     <span class="demonstration" style="line-height: 30pt;">绘画风格{{ cardSelectTitle }}</span>
   </el-tooltip>
   <div class="card-container">
@@ -129,6 +129,11 @@ export default {
             this.cardList = this.orderList(data)
             this.cardList.forEach((item, index) => {
               item.selected = index === 0;
+              if (item.selected) {
+                this.selectModel = item
+                this.cardSelectTitle = "(" + item.showName + ")"
+                console.log(item);
+              }
             });
           })
           .catch(error => console.error(error));

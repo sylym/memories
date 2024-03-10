@@ -36,7 +36,7 @@
               <div class="time">图片种子：{{ image.seed }}</div>
               <div style="display:none" :ref="'prompts_' + image.image_tag_md5_id">{{ image.strPrompt }}</div>
               <div class="bottom">
-                <el-tooltip class="box-item" effect="dark" content="拷贝关键词" placement="bottom-end">
+                <el-tooltip class="box-item" effect="dark" content="拷贝关键词和图片参数" placement="bottom-end">
                   <el-button type="primary" icon="el-icon-copy-document" circle
                              @click="copyPrompt(image.image_tag_md5_id)" style="margin-left: 20px;" />
                 </el-tooltip>
@@ -44,7 +44,7 @@
                   <el-button type="primary" icon="el-icon-download" circle
                              @click="downloadImg(image.image_tag_md5_id)" style="margin-left: 20px;" />
                 </el-tooltip>
-                <el-tooltip class="box-item" effect="dark" content="将该图片描绘词复制到 <br/>'希望出现的内容中'" raw-content
+                <el-tooltip class="box-item" effect="dark" content="将该图片描绘词复制到文本框 “希望出现的内容” 中" raw-content
                             placement="bottom">
                   <el-button type="primary" icon="el-icon-magic-stick" circle @click="copyToInput(image.imageData)"
                              style="margin-left: 20px;" />
