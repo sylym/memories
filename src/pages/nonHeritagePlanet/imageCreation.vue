@@ -129,7 +129,7 @@ export default {
                 }
               })
             }
-            if (data.ol !== 1) {
+            if (data.ol != 1) {
               this.$message({
                 showClose: true,
                 message: '服务器已离线，无法使用图片生成功能',
