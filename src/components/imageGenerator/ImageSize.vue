@@ -4,7 +4,9 @@
     <el-col :span="24" style="font-size:12px">
       <el-tooltip class="box-item" effect="dark" content="生成图像的高宽（竖横）比"
                   placement="top-start">
-        <span class="demonstration" style="line-height: 30pt;">图像比例</span>
+        <span class="demonstration" style="line-height: 30pt;">图像比例
+
+        </span>
       </el-tooltip>
       <div class="card-container">
         <div class="card" v-for="(card, index) in cards" :key="index" :class="{ 'selected': card.selected }"
@@ -20,24 +22,24 @@
       </div>
     </el-col>
   </el-row>
+    <div style="margin-top:10px; margin-left:10px;">
+      <el-tooltip class="box-item" effect="dark" content="开启高清修复需要消耗更多算力和时间，使用Latent 采样器"
+                  placement="top-start">
+        <el-switch v-model="upscaleB" class="ml-2" inline-prompt size="large"
+                   style="--el-switch-on-color:  #ff4949; --el-switch-off-color:#13ce66" active-text="高清修复"
+                   inactive-text="原始大小" @change="switchUpscaleSize" />
+      </el-tooltip>
+    </div>
   <el-row>
     <el-col :span="10" :offset="1">
-      <div style="margin-top:30px">
+      <div >
         <el-tooltip class="" effect="dark" content="生成图像宽度（横）像素值"
                     placement="top-start">
           <span class="demonstration" style="line-height: 30pt;">宽</span>
         </el-tooltip>
         <span class="text-space">
-                    <el-input-number v-model="width" :min="20" :max="2560" @change="changeWidth" />
-                </span>
-        <div style="position: absolute;margin-top:-20px;margin-left:200px">
-          <el-tooltip class="box-item" effect="dark" content="开启高清修复需要消耗更多算力和时间，使用Latent 采样器"
-                      placement="top-start">
-            <el-switch v-model="upscaleB" class="ml-2" inline-prompt size="large"
-                       style="--el-switch-on-color:  #ff4949; --el-switch-off-color:#13ce66" active-text="高清修复"
-                       inactive-text="原始大小" @change="switchUpscaleSize" />
-          </el-tooltip>
-        </div>
+          <el-input-number v-model="width" :min="20" :max="2560" @change="changeWidth" />
+        </span>
       </div>
 
       <div style="">
@@ -47,7 +49,7 @@
         </el-tooltip>
         <span class="text-space">
                     <el-input-number v-model="height" :min="20" :max="2560" @change="changeHeight" />
-                </span>
+        </span>
       </div>
     </el-col>
   </el-row>

@@ -325,7 +325,7 @@ export default {
             } else {
               this.$message({
                 showClose: true,
-                message: '删除失败，可能你没有权限删除，这个作品属于：' + user_id,
+                message: '删除失败，可能你没有权限删除，这个作品属于：' + user_id + '。如果你就是此用户，请刷新网页后再试一次。',
                 type: 'error',
               })
             }

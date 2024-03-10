@@ -5,13 +5,15 @@
 
         </span>
   </el-tooltip>
+    <div>
   <el-tooltip class="box-item" effect="dark" content="随机从aitag.top抽取抽签魔导师魔法" placement="top-start">
     <el-switch v-model="randomPrompt" class="ml-2" inline-prompt size="large"
                style="--el-switch-on-color:  #17c8cb; --el-switch-off-color:#13ce66" active-text="随机抽签" inactive-text="手动输入"
                @change="switchRandomPrompt" />
   </el-tooltip>
+    </div>
 
-  <div class="slider-demo-block">
+  <div class="slider-demo-block" style="margin-top:10px;">
     <el-input v-show="promptIsShow" :autosize="{ minRows: 4, maxRows: 10 }" v-model="prompt" maxlength="1000"
               @change="promptChange" placeholder="描述希望图片出现的内，多个词用逗号分隔，比如1个女孩，靠在窗边，用英文表示：1girl,against table，词汇越多，细节会越靠近"
               show-word-limit type="textarea" @click.native="dialogVisible = true" />

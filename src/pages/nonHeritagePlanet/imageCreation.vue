@@ -37,8 +37,10 @@ import Go from './go.vue'
           </el-aside>
         </el-col>
         <el-col :span="17">
-          <el-progress :percentage=processCount :stroke-width="12" striped striped-flow :duration="duration"
+          <el-tooltip class="box-item" effect="dark" content="如果出现剩余图片无法加载的情况，请刷新网页" placement="top-start">
+            <el-progress :percentage=processCount :stroke-width="12" striped striped-flow :duration="duration"
                        :format="processTabFormat" color="#e6a23c" />
+          </el-tooltip>
         </el-col>
       </el-row>
     </el-footer>
