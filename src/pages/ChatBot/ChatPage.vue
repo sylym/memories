@@ -2,15 +2,19 @@
   <div>
     <header class="page-header">
       <div class="logo-container">
-        <img
-          src="../../assets/img/logo_transparent.png"
-          alt="Logo"
-          class="logo"
-        />
+        <router-link :to="{ path: '/home' }">
+          <img
+            src="../../assets/img/logo_transparent.png"
+            alt="Logo"
+            class="logo"
+          />
+        </router-link>
+
         <span class="logo-text">云织非遗</span>
       </div>
-
-      <button @click="login" class="login-button">立即登录</button>
+      <router-link :to="{path: '/userProfile/login'}">
+        <button @click="login" class="login-button">立即登录</button>
+      </router-link>
     </header>
     <div class="chat-container">
       <!-- 左侧历史会话列表 -->
@@ -28,6 +32,15 @@
             v-for="(message, index) in messages"
             :key="index"
           >
+            <img
+              :src="
+                message.type === 'bot'
+                  ? 'https://s21.ax1x.com/2024/03/10/pFyyLLt.png'
+                  : 'https://s21.ax1x.com/2024/03/10/pFyyzFS.png'
+              "
+              alt="Avatar"
+              class="avatar"
+            />
             <div v-if="message.type === 'user'" class="user-message">
               {{ message.text }}
             </div>
@@ -68,13 +81,19 @@ export default {
   methods: {
     sendMessage() {
       if (this.newMessage.trim() !== "") {
-        this.messages.push({ type: "user", text: this.newMessage });
+        // 用户输入
+        this.messages.push({
+          type: "user",
+          text: this.newMessage,
+          // avatar: "../../assets/img/user.png",
+        });
         // 在这里发送消息给机器人，并处理机器人的回复
         // 你可以调用后端接口或者其他方式来实现机器人对话的功能
         // 示例：假设机器人的回复是预先定义好的，可以直接添加到消息列表中
         this.messages.push({
           type: "bot",
           text: "This is a reply from the bot.",
+          // avatar: "../../assets/img/bot.png",
         });
         // 清空输入框
         this.newMessage = "";
@@ -190,5 +209,26 @@ export default {
   color: #fff;
   border: none;
   cursor: pointer;
+}
+
+.avatar {
+  width: 40px; /* 头像的宽度 */
+  height: 40px; /* 头像的高度 */
+  border-radius: 50%; /* 圆形头像 */
+  margin-right: 10px; /* 与消息文本之间的距离 */
+  align-self: center; /* 使头像垂直居中 */
+}
+
+.message {
+  display: flex;
+  align-items: center; /* 确保消息和头像在同一行垂直居中 */
+  margin-bottom: 10px;
+}
+
+.user-message,
+.bot-message {
+  flex: 1; /* 使消息文本填充剩余空间 */
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>
