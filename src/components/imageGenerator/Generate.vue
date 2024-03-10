@@ -199,6 +199,9 @@ export default {
           .then(result => {
 
           })
+          .catch(error => {
+            console.log(error);
+          });
     },
     resetButton() {
       this.createImagesBtnTxt = "Generate(生成)"

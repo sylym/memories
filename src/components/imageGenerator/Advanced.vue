@@ -171,6 +171,9 @@ export default {
               this.samplerIndex = sampler
             }
           })
+          .catch(error => {
+            console.log(error);
+          });
     },
     samplerChange(val) {
       this.samplerIndex = val
