@@ -13,7 +13,7 @@
         <span class="logo-text">云织非遗</span>
       </div>
       <router-link :to="{ path: '/userProfile/login' }">
-        <button @click="login" class="login-button">立即登录</button>
+        <button class="login-button">立即登录</button>
       </router-link>
     </header>
     <div class="chat-container">
@@ -44,7 +44,7 @@
             <div v-if="message.type === 'user'" class="user-message">
               {{ message.text }}
             </div>
-            <div v-else class="bot-message">{{ message.text }}</div>
+            <div v-else class="bot-message">{{ message.text.answer }}</div>
           </div>
         </div>
 
@@ -85,6 +85,7 @@
 
 <script>
 import Sidebar from "../../components/Sidebar.vue";
+import axios from "axios";
 
 export default {
   name: "ChatPage",
@@ -110,21 +111,29 @@ export default {
         // 在这里发送消息给机器人，并处理机器人的回复
         // 你可以调用后端接口或者其他方式来实现机器人对话的功能
         // 示例：假设机器人的回复是预先定义好的，可以直接添加到消息列表中
-        axios.post('http://127.0.0.1:5000/answer', {
-          question: this.newMessage
-        })
-        this.messages.push({
-          type: "bot",
-          text: "This is a reply from the bot.",
-          // avatar: "../../assets/img/bot.png",
-        });
-        // 清空输入框
-        this.newMessage = "";
-        // 滚动到消息列表底部
-        this.$nextTick(() => {
-          this.$refs.messageList.scrollTop =
-            this.$refs.messageList.scrollHeight;
-        });
+        axios
+          .post("http://82.157.176.78:5000/answer", {
+            question: this.newMessage,
+          })
+          .then((response) => {
+            const botReply = response.data; // 假设机器人回复存储在response.data中，需要根据实际情况调整
+            this.messages.push({
+              type: "bot",
+              text: botReply,
+              // avatar: "../../assets/img/bot.png",
+            });
+            // 清空输入框
+            this.newMessage = "";
+            // 滚动到消息列表底部
+            this.$nextTick(() => {
+              this.$refs.messageList.scrollTop =
+                this.$refs.messageList.scrollHeight;
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching bot reply:", error);
+            alert("Error fetching bot reply:", error);
+          });
       }
     },
     handleConversationSelected(conversation) {

@@ -10,21 +10,21 @@
         <!-- 当前轮播图 -->
         <div class="current-swiper swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide slide1">
+            <router-link :to="{path: '/nonHeritagePlanet/QuestionAndAnswer'}" class="swiper-slide slide1">
               <div class="title">{{ slides[0].title }}</div>
               <div class="name">{{ slides[0].name }}</div>
               <p class="detail">{{ slides[0].detail }}</p>
-            </div>
-            <div class="swiper-slide slide2">
+            </router-link>
+            <router-link :to="{path: '/nonHeritagePlanet/QuestionAndAnswer'}" class="swiper-slide slide2">
               <div class="title">{{ slides[1].title }}</div>
               <div class="name">{{ slides[1].name }}</div>
               <p class="detail">{{ slides[1].detail }}</p>
-            </div>
-            <div class="swiper-slide slide3">
+            </router-link>
+            <router-link :to="{path: '/nonHeritagePlanet/QuestionAndAnswer'}" class="swiper-slide slide3">
               <div class="title">{{ slides[2].title }}</div>
               <div class="name">{{ slides[2].name }}</div>
               <p class="detail">{{ slides[2].detail }}</p>
-            </div>
+            </router-link>
           </div>
         </div>
 
@@ -104,14 +104,14 @@ export default {
       slides: [
         {
           title: "",
-          name: "",
-          detail: "2011年底成为TF家族练习生，2013年8月6日以组合形式出道。",
+          name: "图片创作",
+          detail: "",
         },
         {
           title: "",
-          name: "",
+          name: "非遗问答",
           detail:
-            "2010年底成为TF家族练习生，一年后其他学员陆续退出，只有王俊凯坚持下来，TF家族因此得以存续。",
+            "",
         },
         {
           title: "",
