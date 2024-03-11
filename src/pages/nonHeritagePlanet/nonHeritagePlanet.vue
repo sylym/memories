@@ -1,32 +1,88 @@
 <template>
   <div>
     <!-- 导航栏 -->
-    <div style="position: absolute; z-index: 2; top: 0; left: 0; right: 0;">
+    <div style="position: absolute; z-index: 2; top: 0; left: 0; right: 0">
       <jy-tab-bar :normal-title="normalTitle" :is-back="false"></jy-tab-bar>
     </div>
 
-    <!-- 轮播图 -->
-    <div class="carousel-container">
-      <div class="carousel-wrapper" :style="{ transform: 'translateX(' + translateValue + ')' }">
-        <div v-for="(item, index) in carouselImages" :key="index" class="carousel-slide">
-          <a :href="item.link">
-            <img :src="item.src" alt="轮播图" class="carousel-image" />
-            <div class="image-description">{{ item.description }}</div> <!-- 添加说明文字 -->
-          </a>
+    <div class="banner">
+      <div class="swiper">
+        <!-- 当前轮播图 -->
+        <div class="current-swiper swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide slide1">
+              <div class="title">{{ slides[0].title }}</div>
+              <div class="name">{{ slides[0].name }}</div>
+              <p class="detail">{{ slides[0].detail }}</p>
+            </div>
+            <div class="swiper-slide slide2">
+              <div class="title">{{ slides[1].title }}</div>
+              <div class="name">{{ slides[1].name }}</div>
+              <p class="detail">{{ slides[1].detail }}</p>
+            </div>
+            <div class="swiper-slide slide3">
+              <div class="title">{{ slides[2].title }}</div>
+              <div class="name">{{ slides[2].name }}</div>
+              <p class="detail">{{ slides[2].detail }}</p>
+            </div>
+          </div>
         </div>
-      </div>
-      <button class="prev-button" @click="prevSlide">&lt;</button>
-      <button class="next-button" @click="nextSlide">&gt;</button>
-    </div>
 
+        <!-- 左侧轮播图 -->
+        <div class="nocurrent-swiper left-swiper swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide slide3">
+              <div class="title">{{ slides[2].title }}</div>
+              <div class="name">{{ slides[2].name }}</div>
+              <p class="detail">{{ slides[2].detail }}</p>
+            </div>
+            <div class="swiper-slide slide1">
+              <div class="title">{{ slides[0].title }}</div>
+              <div class="name">{{ slides[0].name }}</div>
+              <p class="detail">{{ slides[0].detail }}</p>
+            </div>
+            <div class="swiper-slide slide2">
+              <div class="title">{{ slides[1].title }}</div>
+              <div class="name">{{ slides[1].name }}</div>
+              <p class="detail">{{ slides[1].detail }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧轮播图 -->
+        <div class="nocurrent-swiper right-swiper swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide slide2">
+              <div class="title">{{ slides[1].title }}</div>
+              <div class="name">{{ slides[1].name }}</div>
+              <p class="detail">{{ slides[1].detail }}</p>
+            </div>
+            <div class="swiper-slide slide3">
+              <div class="title">{{ slides[2].title }}</div>
+              <div class="name">{{ slides[2].name }}</div>
+              <p class="detail">{{ slides[2].detail }}</p>
+            </div>
+            <div class="swiper-slide slide1">
+              <div class="title">{{ slides[0].title }}</div>
+              <div class="name">{{ slides[0].name }}</div>
+              <p class="detail">{{ slides[0].detail }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-prev" @click="prevSlide"></div>
+        <div class="swiper-button-next" @click="nextSlide"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Swiper from "swiper";
+import "../../assets/css/swiper.min.css";
 import jyTabBar from "@/components/tabbar/jyTabbar/jyTabBar";
 
 export default {
-  name: 'nonHeritagePlanet',
+  name: "nonHeritagePlanet",
   components: {
     jyTabBar,
   },
@@ -37,101 +93,208 @@ export default {
         { title: "非遗星球", url: "/nonHeritagePlanet/nonHeritagePlanet" },
         { title: "数字展馆", url: "/exhibition/exhibitionHome" },
         { title: "创作者家园", url: "/DigitalArtwork/Work" },
-        { title: "我的", url: this.$cookies.get('token') === null ? "/userProfile/login" : "/userProfile/userInfo" }
+        {
+          title: "我的",
+          url:
+            this.$cookies.get("token") === null
+              ? "/userProfile/login"
+              : "/userProfile/userInfo",
+        },
       ],
-      carouselImages: [
-        { src: "https://s11.ax1x.com/2024/03/02/pF00IvF.jpg", link: "/nonHeritagePlanet/ImageCreation", description: "图片创作" },
-        { src: "https://s11.ax1x.com/2024/03/02/pF00Hb9.jpg", link: "/nonHeritagePlanet/QuestionAndAnswer", description: "非遗对话" },
-        { src: "https://img2.baidu.com/it/u=1639383325,2675348140&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=753", link: "https://zh.wikipedia.org/wiki/%E4%B8%89%E6%98%9F%E5%A0%86%E9%81%97%E5%9D%80", description: "枫香染" },
-        // 添加更多轮播图项
+      slides: [
+        {
+          title: "",
+          name: "",
+          detail: "2011年底成为TF家族练习生，2013年8月6日以组合形式出道。",
+        },
+        {
+          title: "",
+          name: "",
+          detail:
+            "2010年底成为TF家族练习生，一年后其他学员陆续退出，只有王俊凯坚持下来，TF家族因此得以存续。",
+        },
+        {
+          title: "",
+          name: "",
+          detail: "2005年首登电视荧屏，开始参演各类综艺节目。",
+        },
       ],
-      currentIndex: 0,
-    }
+      swiper: null,
+      leftSwiper: null,
+      rightSwiper: null
+    };
   },
-  computed: {
-    translateValue() {
-      return `-${this.currentIndex * 100}%`;
-    },
+  mounted() {
+    // 初始化当前轮播
+    this.swiper = new Swiper(".current-swiper", {
+      loop: true,
+    });
+
+    // 初始化左侧轮播
+    this.leftSwiper = new Swiper(".left-swiper", {
+      loop: true,
+      simulateTouch: false,
+    });
+
+    // 初始化右侧轮播
+    this.rightSwiper = new Swiper(".right-swiper", {
+      loop: true,
+      simulateTouch: false,
+    });
+
+    // 控制当前轮播与左右两侧轮播的关联
+    // this.swiper.controller.control = [this.leftSwiper, this.rightSwiper];
   },
   methods: {
     prevSlide() {
-      this.currentIndex = (this.currentIndex - 1 + this.carouselImages.length) % this.carouselImages.length;
+      this.swiper.slidePrev();
+      this.leftSwiper.slidePrev();
+      this.rightSwiper.slidePrev();
     },
     nextSlide() {
-      this.currentIndex = (this.currentIndex + 1) % this.carouselImages.length;
+      this.swiper.slideNext();
+      this.leftSwiper.slideNext();
+      this.rightSwiper.slideNext();
     },
   },
 };
 </script>
 
 <style scoped>
-.body {
-  background-color: #581526;
+.banner {
+  padding-top: 80px;
 }
-
-
-.carousel-container {
+.banner .swiper {
+  width: 1200px;
+  margin: 0 auto;
   position: relative;
-  width: 100%;
-  overflow: hidden;
-  background-color: #581526;
-  /* 添加背景颜色，根据实际需求调整 */
-  margin-top: 50px;
-  /* 与顶部的距离，根据实际需求调整 */
-  text-align: center;
-  display: flex;
-  align-items: center;
-  /* 垂直居中图片 */
-  justify-content: center;
-  /* 水平居中图片 */
 }
-
-.carousel-wrapper {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
+.current-swiper {
+  width: 650px;
+  height: 370px;
+  border-radius: 10px;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 99;
 }
-
-.carousel-slide {
-  flex: 0 0 100%;
-}
-
-.carousel-image {
-  /* width: 50%; */
-  /* 设置图片的最大高度，根据实际需求调整 */
-  max-height: 600px; 
-  width: auto;
-  /* height: auto; */
-}
-
-.prev-button,
-.next-button {
+.left-swiper {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 32px;
-  /* 调整箭头的大小 */
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #fff;
-  /* 调整箭头的颜色 */
+  left: 117px;
+  top: 52px;
+  z-index: 1;
 }
-
-.prev-button {
-  left: 10px;
+.right-swiper {
+  position: absolute;
+  right: 117px;
+  left: auto;
+  top: 52px;
+  z-index: 1;
 }
-
-.next-button {
+.nocurrent-swiper {
+  width: 479px;
+  height: 273px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+.nocurrent-swiper:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(237, 240, 240, 0.9);
+  z-index: 99;
+}
+.slide1 {
+  background: url("https://s11.ax1x.com/2024/03/02/pF00IvF.jpg") no-repeat right
+    50% / auto 100% #fff;
+}
+.slide2 {
+  background: url("https://s11.ax1x.com/2024/03/02/pF00Hb9.jpg") no-repeat right
+    50% / auto 100% #e2e3e8;
+}
+.slide3 {
+  background: url("https://s11.ax1x.com/2024/03/02/pF00Hb9.jpg") no-repeat right
+    50% / auto 100% #f0faf9;
+}
+.title {
+  padding-top: 70px;
+  margin-left: 45px;
+  height: 29px;
+  line-height: 29px;
+  font-size: 18px;
+  color: #666;
+}
+.nocurrent-swiper .title {
+  padding-top: 44px;
+  margin-left: 30px;
+  font-size: 16px;
+  height: 25px;
+  line-height: 25px;
+}
+.name {
+  margin-left: 45px;
+  height: 55px;
+  display: inline-block;
+  position: relative;
+  line-height: 55px;
+  padding-bottom: 9px;
+  padding-right: 55px;
+  border-bottom: 1px solid #dddddd;
+  font-size: 36px;
+  color: #333;
+}
+.nocurrent-swiper .name {
+  height: 46px;
+  line-height: 46px;
+  font-size: 30px;
+  padding-right: 46px;
+  margin-left: 30px;
+}
+.name:before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
   right: 10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: url("https://s21.ax1x.com/2024/03/11/pF6dhzq.png") no-repeat
+    center center;
 }
-
-
-
-.image-description {
-  color: #fff;
-  /* 调整说明文字颜色 */
-  font-size: 28px;
-  /* 调整说明文字大小 */
-  /* margin-top: 20px; */
-  /* 调整说明文字与图片的距离 */
-}</style>
+.nocurrent-swiper .name:before {
+  width: 26px;
+  height: 26px;
+  background-size: 100% 100%;
+}
+.detail {
+  margin-left: 45px;
+  width: 275px;
+  margin-top: 30px;
+  padding-right: 5px;
+  line-height: 24px;
+  color: #bbb;
+  font-size: 14px;
+}
+.nocurrent-swiper .detail {
+  font-size: 12px;
+  line-height: 20px;
+  width: 235px;
+  margin-left: 30px;
+}
+.swiper-button-prev {
+  width: 46px;
+  height: 46px;
+  background: url("https://s21.ax1x.com/2024/03/11/pF6dfWn.png") no-repeat
+    center center;
+}
+.swiper-button-next {
+  width: 46px;
+  height: 46px;
+  background-size: auto;
+  background-image: url("https://s21.ax1x.com/2024/03/11/pF6dcdg.png");
+}
+</style>

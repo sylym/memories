@@ -12,7 +12,7 @@
 
         <span class="logo-text">云织非遗</span>
       </div>
-      <router-link :to="{path: '/userProfile/login'}">
+      <router-link :to="{ path: '/userProfile/login' }">
         <button @click="login" class="login-button">立即登录</button>
       </router-link>
     </header>
@@ -35,8 +35,8 @@
             <img
               :src="
                 message.type === 'bot'
-                  ? 'https://s21.ax1x.com/2024/03/10/pFyyLLt.png'
-                  : 'https://s21.ax1x.com/2024/03/10/pFyyzFS.png'
+                  ? 'https://s21.ax1x.com/2024/03/11/pF6FAuF.png'
+                  : 'https://s21.ax1x.com/2024/03/11/pF6FicT.png'
               "
               alt="Avatar"
               class="avatar"
@@ -50,13 +50,33 @@
 
         <!-- 消息输入框 -->
         <div class="input-container">
-          <input
-            type="text"
+          <!-- <div class="frame-group">
+            <img src="./..\..\assets\img\枫香染.svg" alt="枫香染" />
+          </div> -->
+          <textarea
             v-model="newMessage"
             @keyup.enter="sendMessage"
             placeholder="Type your message..."
-          />
-          <button class="send-button" @click="sendMessage">Send</button>
+            rows="2"
+          ></textarea>
+          <button class="icon-button send-button absolute" @click="sendMessage">
+            <!-- 替换成SVG图标 -->
+            <svg
+              class="icon-svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M7 11L12 6L17 11M12 18V7"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -90,6 +110,9 @@ export default {
         // 在这里发送消息给机器人，并处理机器人的回复
         // 你可以调用后端接口或者其他方式来实现机器人对话的功能
         // 示例：假设机器人的回复是预先定义好的，可以直接添加到消息列表中
+        axios.post('http://127.0.0.1:5000/answer', {
+          question: this.newMessage
+        })
         this.messages.push({
           type: "bot",
           text: "This is a reply from the bot.",
@@ -109,7 +132,6 @@ export default {
       // 现在将其更新为选中会话的消息数组
       this.messages = conversation.messages;
     },
-    login() {},
     updateMessageListHeight() {
       const headerHeight = 40; // 头部导航栏高度
       const windowHeight = window.innerHeight;
@@ -191,24 +213,42 @@ export default {
 .input-container {
   display: flex;
   align-items: center;
+  justify-content: flex-end; /* 调整输入框及按钮的位置 */
   margin-top: auto;
+  position: relative; /* 设置相对定位 */
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* max-width: 800px; */
+  width: 100%;
+  box-sizing: border-box;
+  cursor: text;
+  position: relative;
+  min-height: 52px;
 }
 
-.input-container input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.input-container textarea {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  flex-grow: 1;
+  margin-left: 12px;
+  margin-right: 12px;
+  resize: none;
+  overflow-y: hidden;
+  max-height: 200px;
+  padding: 0.625rem 2.5rem;
+  line-height: 1.5;
 }
 
 .send-button {
-  margin-left: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+  background-color: #e6e6e6;
+  padding: 2px;
+  border-radius: 8px;
+  cursor: default;
+  right: 0.75rem;
 }
 
 .avatar {
@@ -230,5 +270,18 @@ export default {
   flex: 1; /* 使消息文本填充剩余空间 */
   padding: 10px;
   border-radius: 5px;
+}
+
+.frame-group {
+  position: absolute; /* 设置绝对定位 */
+  top: -50px; /* 调整frame-group在input-container中的位置 */
+}
+
+.login-button {
+  background: linear-gradient(289.65deg, #ba3822 0%, #e39167 100%);
+  color: #fff;
+  /* font-family: "楷体", cursive; */
+  width: 84px;
+  height: 30px;
 }
 </style>
