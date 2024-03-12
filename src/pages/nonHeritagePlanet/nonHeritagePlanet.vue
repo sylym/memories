@@ -12,7 +12,7 @@
         <div class="current-swiper swiper-container">
           <div class="swiper-wrapper">
             <router-link
-              :to="{ path: '/nonHeritagePlanet/QuestionAndAnswer' }"
+              :to="{ path: '/nonHeritagePlanet/imageCreation' }"
               class="swiper-slide slide1"
             >
               <div class="title">{{ slides[0].title }}</div>

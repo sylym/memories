@@ -70,7 +70,6 @@
           <div style="width: 160px;text-align: center">免责声明</div>
         </div>
         <p class="team">网站建设团队：北京邮电大学云织非遗团队</p>
-        <p class="webId" @click="changePage()">备案号：京ICP备2022022795号-1</p>
       </div>
     </div>
   </div>
