@@ -13,8 +13,8 @@
       <!-- Buttons -->
       <div class="button-group">
         <!-- New conversation button -->
-        <button class="new-conversation-btn" @click="createNewConversation">
-          枫香染图片生成
+        <button class="new-conversation-btn" @click="backToPrev">
+          返回
         </button>
         <!-- Placeholder button -->
         <button class="placeholder-btn" @click="createNewConversation">
@@ -54,17 +54,7 @@ export default {
   data() {
     return {
       conversations: [
-        {
-          title: "conversation1",
-          content: "对话内容1",
-          messages: [],
-        },
-        {
-          title: "conversation2",
-          content: "对话内容2",
-          messages: [],
-        },
-        { title: "conversation3", content: "对话内容3", messages: [] },
+        
         // 其他会话
       ],
       searchQuery: "", // 搜索关键词
@@ -109,6 +99,9 @@ export default {
       this.conversations.splice(index, 1);
       console.log("会话已删除");
     },
+    backToPrev() {
+      window.history.back()
+    }
   },
 };
 </script>
