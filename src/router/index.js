@@ -53,6 +53,7 @@ const rights = () => import("../pages/statusInfo/allRights")
 const nonHeritagePlanet = () => import("../pages/nonHeritagePlanet/nonHeritagePlanet") //非遗星球
 const GptPage = () => import("../pages/ChatBot/ChatPage") // 对话问答界面
 
+const imageCreation = () => import("../pages/nonHeritagePlanet/imageCreation") //图片创作
 const routes = [
   {
     path: '',
@@ -285,7 +286,12 @@ const routes = [
   {
     path: '/nonHeritagePlanet/QuestionAndAnswer',
     component: GptPage,
-    name: "对话问答"
+    name: "网页问答"
+  },
+  {
+    path: '/nonHeritagePlanet/imageCreation',
+    component: imageCreation,
+    name: "图片创作"
   }
 ]
 

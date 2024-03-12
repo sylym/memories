@@ -60,7 +60,7 @@
             <div slot="itemType">
               <button @click="uploadFile" class="uploadBtn">上传</button>
               <div class="fileDelete">
-                <p class="fileName">{{displayInfo.filename}}
+                <p class="fileName">{{displayInfo.filename}}</p>
                 <p v-if="displayInfo.filename !==''" class="delete" @click="deleteFile">删除</p>
               </div>
             </div>
