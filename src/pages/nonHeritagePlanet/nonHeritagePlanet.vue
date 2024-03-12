@@ -5,22 +5,32 @@
       <jy-tab-bar :normal-title="normalTitle" :is-back="false"></jy-tab-bar>
     </div>
 
+    <br /><br /><br />
     <div class="banner">
       <div class="swiper">
         <!-- 当前轮播图 -->
         <div class="current-swiper swiper-container">
           <div class="swiper-wrapper">
-            <router-link :to="{path: '/nonHeritagePlanet/QuestionAndAnswer'}" class="swiper-slide slide1">
+            <router-link
+              :to="{ path: '/nonHeritagePlanet/QuestionAndAnswer' }"
+              class="swiper-slide slide1"
+            >
               <div class="title">{{ slides[0].title }}</div>
               <div class="name">{{ slides[0].name }}</div>
               <p class="detail">{{ slides[0].detail }}</p>
             </router-link>
-            <router-link :to="{path: '/nonHeritagePlanet/QuestionAndAnswer'}" class="swiper-slide slide2">
+            <router-link
+              :to="{ path: '/nonHeritagePlanet/QuestionAndAnswer' }"
+              class="swiper-slide slide2"
+            >
               <div class="title">{{ slides[1].title }}</div>
               <div class="name">{{ slides[1].name }}</div>
               <p class="detail">{{ slides[1].detail }}</p>
             </router-link>
-            <router-link :to="{path: '/nonHeritagePlanet/QuestionAndAnswer'}" class="swiper-slide slide3">
+            <router-link
+              :to="{ path: '/nonHeritagePlanet/QuestionAndAnswer' }"
+              class="swiper-slide slide3"
+            >
               <div class="title">{{ slides[2].title }}</div>
               <div class="name">{{ slides[2].name }}</div>
               <p class="detail">{{ slides[2].detail }}</p>
@@ -110,18 +120,17 @@ export default {
         {
           title: "",
           name: "非遗问答",
-          detail:
-            "",
+          detail: "",
         },
         {
           title: "",
           name: "",
-          detail: "2005年首登电视荧屏，开始参演各类综艺节目。",
+          detail: "",
         },
       ],
       swiper: null,
       leftSwiper: null,
-      rightSwiper: null
+      rightSwiper: null,
     };
   },
   mounted() {
@@ -140,6 +149,17 @@ export default {
     this.rightSwiper = new Swiper(".right-swiper", {
       loop: true,
       simulateTouch: false,
+    });
+
+    // 当 Swiper 实例初始化完成后再添加事件监听
+    this.swiper.on("init", () => {
+      this.swiper.on("slideChange", () => {
+        const currentIndex = this.swiper.activeIndex;
+        // 同步调整左侧轮播图的位置
+        this.leftSwiper.slideTo(currentIndex);
+        // 同步调整右侧轮播图的位置
+        this.rightSwiper.slideTo(currentIndex);
+      });
     });
 
     // 控制当前轮播与左右两侧轮播的关联
@@ -191,6 +211,13 @@ export default {
   top: 52px;
   z-index: 1;
 }
+
+.current-swiper,
+.left-swiper,
+.right-swiper {
+  border-radius: 50%;
+}
+
 .nocurrent-swiper {
   width: 479px;
   height: 273px;
