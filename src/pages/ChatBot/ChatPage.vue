@@ -112,7 +112,7 @@ export default {
         // 你可以调用后端接口或者其他方式来实现机器人对话的功能
         // 示例：假设机器人的回复是预先定义好的，可以直接添加到消息列表中
         axios
-          .post("//82.157.176.78:5000/answer", {
+          .post("http://localhost:3000/api", {
             question: this.newMessage,
           })
           .then((response) => {
