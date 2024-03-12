@@ -252,6 +252,7 @@ export default {
   background-repeat: no-repeat; /* 禁止背景图片重复 */
   margin-top: 50px;
   background-blend-mode: overlay; /* 设置背景图片的混合模式为 overlay */
+  z-index: -1;
 }
 
 </style>

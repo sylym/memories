@@ -51,6 +51,8 @@ const allCollections = () => import("../components/collections/allCollections") 
 const workDetail = () => import("../pages/statusInfo/statusInfo")  // 个人作品详情
 const rights = () => import("../pages/statusInfo/allRights")
 const nonHeritagePlanet = () => import("../pages/nonHeritagePlanet/nonHeritagePlanet") //非遗星球
+const GptPage = () => import("../pages/ChatBot/ChatPage") // 对话问答界面
+
 const imageCreation = () => import("../pages/nonHeritagePlanet/imageCreation") //图片创作
 const routes = [
   {
@@ -282,10 +284,15 @@ const routes = [
     name: "非遗星球"
   },
   {
-    path: '/nonHeritagePlanet/imageCreation',   //图片创作
+    path: '/nonHeritagePlanet/QuestionAndAnswer',
+    component: GptPage,
+    name: "网页问答"
+  },
+  {
+    path: '/nonHeritagePlanet/imageCreation',
     component: imageCreation,
     name: "图片创作"
-  },
+  }
 ]
 
 const router = new VueRouter({
