@@ -113,7 +113,7 @@ export default {
         // 示例：假设机器人的回复是预先定义好的，可以直接添加到消息列表中
         axios
           .post("https://chatapi.ichol.tech/answer", {
-            data: this.newMessage,
+            question: this.newMessage,
           })
           .then((response) => {
             const botReply = response.data; // 假设机器人回复存储在response.data中，需要根据实际情况调整
