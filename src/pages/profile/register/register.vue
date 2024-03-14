@@ -87,7 +87,7 @@
               <div class="content">
                 <p class="result">恭喜您注册成功</p>
                 <p class="tips">请妥善保管您的用户名和密码</p>
-                <p class="login" @click="login">去登录</p>
+                <!-- <p class="login" @click="login">去登录</p> -->
               </div>
             </div>
           </div>
