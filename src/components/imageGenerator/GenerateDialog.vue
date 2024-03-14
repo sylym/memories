@@ -93,6 +93,7 @@ export default {
       // console.log(this.generateImageSrc)
     });
     this.$bus1.$on('generateDialogProcessDestroy', (data) => {
+      this.loading.close()
       this.processDestroy()
     });
 

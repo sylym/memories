@@ -77,7 +77,7 @@ export default {
     interrupt() {
 
       this.createImagesBtnTxt = "停止中...",
-          this.$myFetch('/api/interrupt', 'POST', null)
+          this.$myFetch('/api/interrupt', 'POST', {email:this.$store.state.userInfo.username})
               .then(result => {
                 this.resetButton();
                 this.$bus1.$emit("generateDialogProcessDestroy");
