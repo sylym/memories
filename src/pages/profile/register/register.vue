@@ -152,7 +152,7 @@
     },
     methods: {
       login() {    //跳转至登录界面
-        this.$router.push("/userProfile/login")
+        this.$router.push("/home")
       },
       change1() {
         this.$message({
