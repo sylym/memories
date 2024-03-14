@@ -19,7 +19,7 @@ import Go from './go.vue'
       <!-- 侧边栏内容 -->
       <Go />
     </el-aside>
-    <el-main class="main" v-infinite-scroll="callChildloadMore" infinite-scroll-delay="500" infinite-scroll-distance="50" :infinite-scroll-disabled='disabled' :style="contentStyleObj">
+    <el-main class="main" v-infinite-scroll="callChildloadMore" infinite-scroll-delay="100" infinite-scroll-distance="50" :infinite-scroll-disabled='disabled' :style="contentStyleObj">
       <!-- 主要内容 -->
       <el-backtop :bottom="100" target=".el-main" :visibility-height="200">
         返回顶部

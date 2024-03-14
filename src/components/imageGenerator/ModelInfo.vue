@@ -111,7 +111,7 @@ export default {
     this.initAllModel()
     document.addEventListener('keydown', (event) => {
       if (event.altKey && event.code === 'KeyP') {
-        this.selectCardAdvance()
+        //this.selectCardAdvance()
         console.log('hello');
       }
     });
