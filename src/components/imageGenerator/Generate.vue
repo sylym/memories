@@ -24,7 +24,8 @@ let imgData = {
   sizew: 0,
   sizeh: 0,
   hires_upscale: 1,
-  email: ''
+  email: '',
+  modelId: ''
 }
 let selectModel = {}
 export default {
@@ -133,83 +134,66 @@ export default {
         selectModel = model
       });
       if (selectModel != undefined && selectModel.title != "") {
-        this.loading = this.$loading({
-          lock: true,
-          text: '切换绘画风格中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        this.switchModel(selectModel.title).then(() => {
-          this.$bus1.$emit("generateDialogShowHidden", { show: true });
-          imgData.email = this.$store.state.userInfo.username
-          this.$myFetch("/api/create", 'POST', imgData)
-              .then((resultData) => {
-                if (resultData === "badParameter"){
-                  this.resetButton();
-                  this.$bus1.$emit("generateDialogProcessDestroy");
-                  this.$message.error('生成参数错误，创建绘画失败');
-                  return
-                }
-                if (resultData === "userError") {
-                  this.resetButton();
-                  this.$bus1.$emit("generateDialogProcessDestroy");
-                  this.$message.error('图片重复');
-                  return
-                }
-                //到这里不是运行状态说明被提前终止，这里就需要直接返回不再继续
-                if (this.createRunning == false) {
-                  return
-                }
-                this.$bus1.$emit("generateDialogProcessDestroy", {});
-                if (resultData.sub_seed_path.length == 1) {
-                  //如果不是批量生成只有一个情况下
-                  // imageB64 = "data:image/png;base64," + resultData[0].image
-                }
-                this.$bus1.$emit("generateDialogDone", {
-                  processCount: 100,
-                  imageUrl: IMAGE_GET_URL + resultData.sub_seed_path[0].image_tag_md5_id + "&t=4"
-                });
-                for (let i = 0; i < resultData.sub_seed_path.length; i++) {
-                  let imgurl = IMAGE_GET_URL + resultData.sub_seed_path[i].image_tag_md5_id + "&t=4"
-
-                  this.$bus1.$emit("generateDialogPushSrcList", {
-                    imageUrl: imgurl
-                  });
-                  let imgDataNew = {}
-                  Object.assign(imgDataNew, imgData);
-
-                  imgDataNew["seed"] = resultData.seed
-                  imgDataNew["image_tag_md5_id"] = resultData.sub_seed_path[i].image_tag_md5_id
-                  imgDataNew["star"] = 0
-                  this.$bus1.$emit("addImagesFirst", {
-                    createImgData: imgDataNew,
-                    url: imgurl
-                  });
-
-                  if (resultData.seed != -200) {
-                  }
-                }
-                this.resetButton();
-              })
-              .catch(error => {
+        this.$bus1.$emit("generateDialogShowHidden", { show: true });
+        imgData.email = this.$store.state.userInfo.username
+        imgData.modelId = selectModel.title
+        this.$myFetch("/api/create", 'POST', imgData)
+            .then((resultData) => {
+              if (resultData === "badParameter"){
                 this.resetButton();
                 this.$bus1.$emit("generateDialogProcessDestroy");
-                console.log(error);
-                console.log("..................................................................");
-                this.$message.error('未知错误，创建绘画失败');
+                this.$message.error('生成参数错误，创建绘画失败');
+                return
+              }
+              if (resultData === "userError") {
+                this.resetButton();
+                this.$bus1.$emit("generateDialogProcessDestroy");
+                this.$message.error('图片重复');
+                return
+              }
+              //到这里不是运行状态说明被提前终止，这里就需要直接返回不再继续
+              if (this.createRunning == false) {
+                return
+              }
+              this.$bus1.$emit("generateDialogProcessDestroy", {});
+              if (resultData.sub_seed_path.length == 1) {
+                //如果不是批量生成只有一个情况下
+                // imageB64 = "data:image/png;base64," + resultData[0].image
+              }
+              this.$bus1.$emit("generateDialogDone", {
+                processCount: 100,
+                imageUrl: IMAGE_GET_URL + resultData.sub_seed_path[0].image_tag_md5_id + "&t=4"
               });
-        })
+              for (let i = 0; i < resultData.sub_seed_path.length; i++) {
+                let imgurl = IMAGE_GET_URL + resultData.sub_seed_path[i].image_tag_md5_id + "&t=4"
+
+                this.$bus1.$emit("generateDialogPushSrcList", {
+                  imageUrl: imgurl
+                });
+                let imgDataNew = {}
+                Object.assign(imgDataNew, imgData);
+
+                imgDataNew["seed"] = resultData.seed
+                imgDataNew["image_tag_md5_id"] = resultData.sub_seed_path[i].image_tag_md5_id
+                imgDataNew["star"] = 0
+                this.$bus1.$emit("addImagesFirst", {
+                  createImgData: imgDataNew,
+                  url: imgurl
+                });
+
+                if (resultData.seed != -200) {
+                }
+              }
+              this.resetButton();
+            })
+            .catch(error => {
+              this.resetButton();
+              this.$bus1.$emit("generateDialogProcessDestroy");
+              console.log(error);
+              console.log("..................................................................");
+              this.$message.error('未知错误，创建绘画失败');
+            });
       }
-    }
-    , async switchModel(modeName) {
-      let model = { modelId: modeName }
-      await this.$myFetch(SERVER_DOMAIN + "/api/changeModel", 'POST', model)
-          .then(result => {
-            this.loading.close()
-          })
-          .catch(error => {
-            console.log(error);
-          });
     },
     resetButton() {
       this.createImagesBtnTxt = "Generate(生成)"

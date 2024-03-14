@@ -87,6 +87,7 @@ export default {
     });
 
     this.$bus1.$on('generateDialogDone', (data) => {
+      this.loading.close()
       this.processCount = data.processCount //进度
       this.generateImageSrc = data.imageUrl //最终生成图像
       // console.log(this.generateImageSrc)
@@ -108,17 +109,20 @@ export default {
       }
 
       this.createRunning = true
-      this.$myFetch("/api/process", 'POST', null)
+      this.$myFetch("/api/process", 'POST', {email:this.$store.state.userInfo.username})
           .then((rtndata) => {
             this.createRunning = false
             // 活动中，循环检查
-            if (rtndata.eta_relative > 0) {
-              console.log("activeactiveactive")
-              this.processCount = parseInt(rtndata.progress * 100)
-              this.generateImageSrc = "data:image/png;base64," + rtndata.current_image
-            } else {
-              //沒活動
-              this.processDestroy()
+            if('eta_relative' in rtndata){
+              this.loading.close()
+              if (rtndata.eta_relative > 0) {
+                console.log("activeactiveactive")
+                this.processCount = parseInt(rtndata.progress * 100)
+                this.generateImageSrc = "data:image/png;base64," + rtndata.current_image
+              } else {
+                //沒活動
+                this.processDestroy()
+              }
             }
           })
           .catch(error => {
@@ -130,6 +134,12 @@ export default {
       this.generateImageSrcList = []
       this.generateImageSrc = ""
       this.processDestroy()
+      this.loading = this.$loading({
+        lock: true,
+        text: '排队中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
       this.processTimer = setInterval(() => {
         this.processGet();
       }, 1000);
