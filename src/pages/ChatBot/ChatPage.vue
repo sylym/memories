@@ -56,7 +56,7 @@
             placeholder="Type your message..."
             rows="2"
           ></textarea>
-          <button class="icon-button send-button absolute" @click="sendMessage">
+          <button class="icon-button send-button absolute" :disabled="sendMessageDisabled" @click="sendMessage">
             <!-- 替换成SVG图标 -->
             <svg
               class="icon-svg"
@@ -93,7 +93,8 @@ export default {
       newMessage: "",
       messageListHeight: "calc(100vh - 200px)", // 初始化为页面高度减去200像素的余量
       socket: null,
-      socketIOClientId: ''
+      socketIOClientId: '',
+      sendMessageDisabled: false,
     };
   },
   components: {
@@ -152,18 +153,19 @@ export default {
           text: this.newMessage,
           // avatar: "../../assets/img/user.png",
         });
-        console.log('question:', this.newMessage);
+        const question = this.newMessage;
+        this.newMessage = "";
+        this.sendMessageDisabled = true;
         this.fetchMessage({
-          "question": this.newMessage,
+          "question": question,
           "socketIOClientId": this.socketIOClientId
         }).then((response) => {
-          // 清空输入框
-          this.newMessage = "";
           // 滚动到消息列表底部
           this.$nextTick(() => {
             this.$refs.messageList.scrollTop =
                 this.$refs.messageList.scrollHeight;
           });
+          this.sendMessageDisabled = false;
         }).catch((error) => {
           console.error("Error fetching bot reply:", error);
           alert("Error fetching bot reply:", error);
