@@ -213,7 +213,7 @@ export default {
 }
 
 .logo {
-  width: 100px;
+  width: 100px; /* 根据实际情况调整 */
   margin-right: 10px;
 }
 
