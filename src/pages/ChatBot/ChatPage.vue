@@ -146,7 +146,7 @@ export default {
       return result;
     },
     sendMessage() {
-      if (this.newMessage.trim() !== "") {
+      if (this.newMessage.trim() !== "" && !this.sendMessageDisabled) {
         // 用户输入
         this.messages.push({
           type: "user",
