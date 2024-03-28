@@ -1,30 +1,29 @@
 <template  >
   <div>
-  <el-tooltip class="box-item" effect="dark" content="说出你想要画的内容，说的越详细图画越近似，可以通过拆成多个英文描述词以逗号分割进行描述" placement="top-start">
-        <span class="demonstration" style="line-height:  30pt;">希望出现的内容
-
-        </span>
+  <el-tooltip class="box-item" effect="dark" content="说出你想要画的内容，说的越详细图画越近似，可以通过拆成多个描述词以逗号分割进行描述" placement="top-start">
+        <span class="demonstration" style="line-height:  30pt;">希望出现的内容</span>
   </el-tooltip>
+    <!--
     <div>
-  <el-tooltip class="box-item" effect="dark" content="随机从aitag.top抽取抽签魔导师魔法" placement="top-start">
-    <el-switch v-model="randomPrompt" class="ml-2" inline-prompt size="large"
-               style="--el-switch-on-color:  #17c8cb; --el-switch-off-color:#13ce66" active-text="随机抽签" inactive-text="手动输入"
-               @change="switchRandomPrompt" />
-  </el-tooltip>
+      <el-tooltip class="box-item" effect="dark" content="随机从aitag.top抽取抽签魔导师魔法" placement="top-start">
+      <el-switch v-model="randomPrompt" class="ml-2" inline-prompt size="large"
+                 style="--el-switch-on-color:  #17c8cb; --el-switch-off-color:#13ce66" active-text="随机抽签" inactive-text="手动输入"
+                 @change="switchRandomPrompt" />
+      </el-tooltip>
     </div>
+    -->
 
   <div class="slider-demo-block" style="margin-top:10px;">
     <el-input v-show="promptIsShow" :autosize="{ minRows: 4, maxRows: 10 }" v-model="prompt" maxlength="1000"
-              @change="promptChange" placeholder="描述希望图片出现的内，多个词用逗号分隔，比如1个女孩，靠在窗边，用英文表示：1girl,against table，词汇越多，细节会越靠近"
-              show-word-limit type="textarea" @click.native="dialogVisible = true" />
+              @change="promptChange" placeholder="描述希望图片出现的内容，可以多个词用逗号分隔（中国龙，金色），或一个完整句子（一条金色的中国龙）"
+              show-word-limit type="textarea" @click.native="dialogVisible = false" />
   </div>
-  <el-tooltip class="box-item" effect="dark" content="如果图片中出现不想要的内容，在此指出哪里有问题，比如手有问题说手坏了，人物没有头发，说没有头发"
-              placement="top-start">
+  <el-tooltip class="box-item" effect="dark" content="如果图片中出现不想要的内容，在此指出哪里有问题，比如手有问题说手坏了，人物没有头发，说没有头发" placement="top-start">
     <span class="demonstration" style="line-height: 30pt;">不希望出现的内容</span>
   </el-tooltip>
   <div class="slider-demo-block">
     <el-input :autosize="{ minRows: 2, maxRows: 6 }" v-model="negative_prompt" maxlength="1500"
-              placeholder="描述图片中不希望出现的内容，多个词用逗号分隔，比如手坏了，眼睛坏了，英文表示比如：bad hands,bad eyes" show-word-limit type="textarea" />
+              placeholder="描述图片中不希望出现的内容，可以多个词用逗号分隔（手坏了，低质量），或一个完整句子（低质量的图片）" show-word-limit type="textarea" />
   </div>
   <el-dialog class="dialogxx" :visible.sync="dialogVisible" append-to-body title="输入图像中希望出现的词">
     输入图片中希望出现的内容，如果不清楚可以查询<a href="https://aibooru.online" target="_blank">aibooru.online</a>&nbsp;&nbsp;
@@ -54,7 +53,7 @@
 
 
 
-const DEFAULT_NAGATIVE_PROMPT = "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, artist name, bad feet,(bad hands),(bad breasts)"
+const DEFAULT_NAGATIVE_PROMPT = ""
 
 
 export default {
