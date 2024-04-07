@@ -1,7 +1,15 @@
 <template>
   <div id="jy-tabBar">
     <!--导航栏-->
-    <div class="left" id="font">
+    <p class="left">
+      <a href="/home"
+        ><img
+          src="../../../assets/img/tabbar/logo.png"
+          alt="云织非遗"
+          style="width: 65%; object-fit: cover"
+      /></a>
+    </p>
+    <div class="center" id="font">
       <div v-if="isBack" class="back" @click="back">返回</div>
       <div v-if="normalTitle.length !== 0" class="normalTitle">
         <!--普通导航栏-->
@@ -10,28 +18,29 @@
           id="title1"
           class="normal"
           @click="page(item)"
+          :key="index"
         >
-          <p>{{ item.title }}</p>
+          <div style="display: flex; padding: 5px">
+            <!-- 图标 -->
+            <img src="../../../assets/img/icon/tabbar_icon.png" alt="图标" />
+            <!-- 文字 -->
+            <p>{{ item.title }}</p>
+          </div>
+
+          <!-- 底部箭头 -->
           <div
             class="tabBarBottom"
             :style="{
-              backgroundColor:
-                $route.fullPath.indexOf(item.url) !== -1
-                  ? '#C71010'
-                  : '#ffffff',
-              border:
-                $route.fullPath.indexOf(item.url) !== -1
-                  ? '2px solid #C71010'
-                  : '2px solid #ffffff',
+              backgroundImage: $route.fullPath.indexOf(item.url) !== -1 ? 'url(https://s21.ax1x.com/2024/04/07/pFLCehR.png)' : 'none',
             }"
           ></div>
         </div>
         <!--“我的”有点问题-->
       </div>
-      <div style="margin-left: 50px" v-if="pathTitle.length !== 0">
-        <div class="pathTitle">
-          <!--含路径的导航栏-->
-          <div
+      <!-- <div style="margin-left: 50px" v-if="pathTitle.length !== 0">
+        <div class="pathTitle"> -->
+      <!--含路径的导航栏-->
+      <!-- <div
             v-for="(item, index) in pathTitle"
             :key="index"
             class="pathTitleText"
@@ -45,19 +54,9 @@
           class="tabBarBottom"
           style="background-color: #c71010; border: 2px solid #c71010"
         ></div>
-      </div>
+      </div> -->
     </div>
-    <p class="center">
-      <a href="/home"
-        ><img
-          :src="`https://s11.ax1x.com/2024/03/04/pFDVe2T.png`"
-          alt="云织非遗"
-          style="width: 220px; object-fit: cover"
-      /></a>
-    </p>
-    <div class="right" id="font">
-      <p>联系我们</p>
-    </div>
+    <div class="right" id="font"></div>
   </div>
 </template>
 
@@ -102,30 +101,41 @@ export default {
 </script>
 
 <style scoped>
+/* 导入字体 */
+@font-face {
+  font-family: "Bimo Chunqiu";
+  src: url("../../../assets/css/楷体_GB2312.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #jy-tabBar {
   width: 100%;
   min-width: 1400px;
   height: 60px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: absolute;
   z-index: 10;
+  background-image: url("../../../assets/img/tabbar/background.png");
 }
 #font {
-  font-family: "Hind Vadodara", sans-serif;
+  margin-top: 10px;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 24px;
   line-height: 24px;
   letter-spacing: 0.01em;
   color: #393939;
+  display: flex;
+  justify-content: space-between;
 }
 #title1 div {
   margin: 0;
 }
 p {
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
 }
 .left {
   margin-left: 50px;
@@ -134,14 +144,13 @@ p {
   min-width: 350px;
 }
 .center {
-  font-family: "Songti SC", serif;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
   line-height: 34px;
   letter-spacing: 0.01em;
-
   color: #393939;
+  margin-right: 100px;
 }
 .right {
   width: 350px;
@@ -151,27 +160,31 @@ p {
   align-items: center;
 }
 .normalTitle {
-  width: 350px;
+  font-family: "Bimo Chunqiu", sans-serif;
+  width: 1000px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px;
 }
 .tabBarBottom {
-  height: 0;
-  width: 21px;
+  height: 10px;
+  width: 80px;
+  /* background-image: url("../../../assets/img/tabbar/selected.png"); */
 }
 .normal {
   display: flex;
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
+  padding: 10px;
 }
 .pathTitle {
   display: flex;
   align-items: center;
 }
 .pathTitleText {
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
