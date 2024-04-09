@@ -9,9 +9,11 @@ import echarts from 'echarts'
 import 'echarts/map/js/china.js';
 import VueCookies from 'vue-cookies'
 import myFetch from './utils/myFetch'
+import VueCarousel3d from 'vue-carousel-3d';
 
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts
+Vue.use(VueCarousel3d);
 Vue.use(ElementUI)
 Vue.use(VueCookies)
 new Vue({
