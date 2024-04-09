@@ -12,107 +12,90 @@
       />
     </div>
 
-    <div
-      class="story2"
-      style="display: flex;flex-direction: column;width: 1300px;position: absolute; background-color"
-    >
+    <div class="story2">
       <div class="title2">
-        <p class="title2Content">我们在做什么？</p>
-        <div
-          style="
-            width: 159px;
-            height: 0;
-            border: 7px solid #c71010;
-            background-color: #c71010;
-            margin-left: -55px;
-            margin-top: 25px;
-          "
-        ></div>
+        <img src="../../assets/img/home/arrow_left.png" alt="" />
+        <p class="title2Content">我们在做什么</p>
+        <img src="../../assets/img/home/arrow_right.png" alt="" />
       </div>
+      <hr
+        style="
+          background-color: #c9b3b4;
+          border: 1.5px solid rgba(255, 255, 255, 1);
+          width: 90%;
+          margin: 20px auto;
+        "
+      />
+
       <div class="content2">
-        <div style="display: flex">
-          <img
-            :src="
-              $store.state.imgBaseUrl +
-              '/%E4%B8%8D%E5%8F%AF%E5%90%8E%E9%80%80.png'
-            "
-            alt="back"
-            class="step"
-          />
-          <img
-            :src="
-              $store.state.imgBaseUrl +
-              '/%E4%B8%8D%E5%8F%AF%E5%89%8D%E8%BF%9B.png'
-            "
-            alt="enter"
-            class="step"
-          />
-        </div>
-        <div v-for="(item, index) in storyContent" class="card" :key="index">
-          <div
-            class="weDoIcon"
-            :style="{
-              backgroundColor: index % 2 === 0 ? '#C71010' : '#143094',
-            }"
-          >
-            <img
-              :src="item.imgUrl"
-              style="width: 30px; height: 30px; object-fit: cover"
-              :alt="index + 'content2'"
-            />
-          </div>
+        <div
+          v-for="(item, index) in storyContent"
+          class="card"
+          :key="index"
+          :style="{ backgroundImage: 'url(' + item.imgUrl + ')' }"
+          @mouseover="showContent(index)"
+          @mouseleave="hideContent(index)"
+        >
+          <transition name="fade">
+            <p v-if="hoverIndex === index" class="content2title">
+              {{ item.content }}
+            </p>
+          </transition>
           <p class="content2title">{{ item.title }}</p>
-          <p class="content2Content">{{ item.content }}</p>
         </div>
       </div>
     </div>
 
     <div class="story3">
-      <img
-        :src="$store.state.imgBaseUrl + '/ji4bse.png'"
-        class="story3Img"
-        alt="story3Img"
-      />
       <div class="whoWeAre">
-        <p class="teamTitle">我们是谁?</p>
-        <div
+        <div class="title3">
+          <img src="../../assets/img/home/arrow_left.png" alt="" />
+          <p class="teamTitle">我们是谁</p>
+          <img src="../../assets/img/home/arrow_right.png" alt="" />
+        </div>
+        <hr
           style="
-            width: 126px;
-            height: 0;
-            border: 7px solid #143094;
-            background-color: #143094;
-            margin-top: 25px;
+            background-color: #c9b3b4;
+            border: 1.5px solid rgba(255, 255, 255, 1);
+            width: 90%;
+            margin: 20px auto;
           "
-        ></div>
-        <p class="we1" style="margin-top: 50px">
+        />
+        <p class="we1" style="margin-left: 50px">
           2021年，我们从贵州省长顺县开始了考察之路。调研小组深入挖掘当地非物质文化遗产二十余项，包括马路屯堡地戏、翁贵古法造纸、姊妹萧等已被选入贵州省非物质文化遗产名录的非遗作品；在当地体验二十余个少数民族的民俗文化和风土人情。我们看到了非遗的历史底蕴与其中的人文艺术价值，但同时我们也认识到了传统的非物质文化遗产在未来发展上的困境和壁垒。
         </p>
-        <p class="we2">
+        <p class="we2" style="margin-left: 50px">
           因此，我们开始思考如何能利用新的技术手段，帮助非遗文化重新焕发生机。我们联合学校的区块链研究技术中心，希望通过打造非遗文化作品产业链，挖掘非遗文化中蕴含的思想观念、人文精神、审美价值、创作原则，将审美、教育、经济等价值赋予新的时代意义。
         </p>
       </div>
+      <img
+        src="../../assets/img/home/who_are_we.png"
+        alt=""
+        class="story3Img"
+      />
     </div>
+    <img class="story1" src="../../assets/img/home/buttom.png" alt="" />
     <div class="bottom">
       <div
         style="
           display: flex;
-          flex-direction: column;
-          justify-content: center;
+          flex-direction: row;
           align-items: center;
           width: 50%;
+          margin-left: 200px;
         "
       >
         <img
-          :src="`https://s11.ax1x.com/2024/03/04/pFDVe2T.png`"
-          style="width: 220px; object-fit: cover"
+          src="../../assets/img/tabbar/logo.png"
+          style="width: 200px; object-fit: cover"
           alt="云织非遗"
         />
-        <div class="bottomText" style="margin-top: 15px">
-          欢迎所有非遗爱好者与我们一同见证
+        <div class="bottomText" style="margin-left: 5px">
+          <p>欢迎所有非遗爱好者与我们一同见证</p>
+          <p>“非遗文化数字化的新纪元”</p>
         </div>
-        <div class="bottomText">“非遗文化数字化的新纪元”</div>
       </div>
-      <div style="width: 1px; height: 150px; background-color: #d4d4d4"></div>
+
       <div
         style="
           display: flex;
@@ -125,7 +108,7 @@
         <div
           style="
             display: flex;
-            justify-content: space-around;
+
             align-items: center;
           "
           class="tips"
@@ -151,34 +134,29 @@ export default {
   name: "home",
   data() {
     return {
+      hoverIndex: null,
       storyContent: [
         {
-          imgUrl: "https://s21.ax1x.com/2024/03/05/pFDHDHJ.png",
-          title: "非遗星球",
-          content: "非遗星球是一个致力于传承和推广中国非物质文化遗产的平台。",
+          imgUrl: require("../../assets/img/home/digital_museum.jpg"),
+          title: "数字展馆",
+          content:
+            "用户可以欣赏海量原创非遗作品，并在数字作品商城完成选购和交易，获得对应该作品的数字凭证。",
           url: "/nonHeritagePlanet/nonHeritagePlanet",
         },
         {
-          imgUrl:
-            this.$store.state.imgBaseUrl +
-            "/%E6%95%B0%E5%AD%97%E7%89%88%E6%9D%83%E4%BF%9D%E6%8A%A4.png",
+          imgUrl: require("../../assets/img/home/digital_protection.jpg"),
           title: "数字版权保护",
           content:
             "我们基于区块链技术，通过上传作品-作品存证-版权注册-登记确权对非遗作品进行数字化的保护。",
         },
         {
-          imgUrl:
-            this.$store.state.imgBaseUrl +
-            "/%E6%95%B0%E5%AD%97%E5%B1%95%E9%A6%86.png",
-          title: "数字展馆",
-          content:
-            "用户可以欣赏海量原创非遗作品，并在数字作品商城完成选购和交易，获得对应该作品的数字凭证。",
+          imgUrl: require("../../assets/img/home/nonheritage_planent.png"),
+          title: "非遗星球",
+          content: "非遗星球是一个致力于传承和推广中国非物质文化遗产的平台。",
         },
         {
-          imgUrl:
-            this.$store.state.imgBaseUrl +
-            "/%E5%85%AC%E7%9B%8A%E4%BA%8B%E4%B8%9A%E5%8A%A9%E5%8A%9B%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4.png",
-          title: "公益事业助力乡村振兴",
+          imgUrl: require("../../assets/img/home/promote_revitalization.png"),
+          title: "助力乡村振兴",
           content:
             "收益所得全部返还给创作者，带动非遗文化继承和保护，助力乡村振兴事业的发展。",
         },
@@ -189,11 +167,24 @@ export default {
     changePage() {
       window.open("https://beian.miit.gov.cn/");
     },
+    showContent(index) {
+      this.hoverIndex = index;
+    },
+    hideContent(index) {
+      this.hoverIndex = null;
+    },
   },
 };
 </script>
 
 <style scoped>
+@font-face {
+  font-family: "Bimo Chunqiu";
+  src: url("../../assets/css/楷体_GB2312.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .background {
   min-width: 1400px;
   width: 100%;
@@ -202,19 +193,14 @@ export default {
   /*background-color: #C71010;*/
 }
 
-.storyImg {
-  width: 1050px;
-  object-fit: cover;
-  margin-right: 10px;
-}
-
 .story1 {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  margin-bottom: 100px; /* 调整story1的底部间距 */
+  /* margin-bottom: 100px;  */
+  background-color: #652d2f;
 }
 
 .story1Img {
@@ -230,54 +216,34 @@ export default {
   align-items: center;
 }
 
-.line1 {
-  width: 280px;
-  height: 0;
-  margin-left: 30px;
-  background-color: #c71010;
-  border: 6px solid #c71010;
-}
-
-.line2 {
-  width: 81px;
-  height: 0;
-  margin-left: 10px;
-  background-color: #143094;
-  border: 6px solid #143094;
-}
-
-.story2Img {
-  min-width: 1400px;
-  width: 100%;
-  object-fit: cover;
-  position: absolute;
-  margin-top: 850px;
-  max-width: 1800px;
-}
-
 .story2 {
   display: flex;
   flex-direction: column;
   width: 100%; /* 设置story2的宽度 */
-  height: auto; /* 设置为自动高度 */
-  /* background-color: #652d2f; */
-  margin-top: 100px;
-  position: relative; /* 将position属性设置为relative */
+  /* height: 700px; 设置为自动高度 */
+  background-color: #652d2f;
+  /* margin-top: 100px; */
+  position: relative;
 }
 
 .title2 {
   width: 100%;
   min-width: 1400px;
   display: flex;
-  flex-direction: column;
-
+  /* flex-direction: column; */
+  margin-top: 30px;
   align-items: center;
   position: relative;
-  margin-top: 990px;
+  justify-content: center;
+}
+
+.title2 img {
+  margin: 0 10px; /* 调整图片之间的间距 */
+  color: #fff;
 }
 
 .title2Content {
-  font-family: "Songti SC", serif;
+  font-family: "Bimo Chunqiu", serif;
   font-style: normal;
   font-weight: 900;
   font-size: 48px;
@@ -286,14 +252,12 @@ export default {
   text-align: center;
   letter-spacing: -0.01em;
 
-  color: #331b3b;
+  color: #ffffff;
 }
 
 .content2 {
   display: flex;
-  align-items: flex-end;
-  margin-top: 160px;
-  margin-left: 90px;
+  align-items: center;
 }
 
 .step {
@@ -304,17 +268,18 @@ export default {
 }
 
 .card {
-  width: 310px;
-  height: 165px;
-
-  background: #ffffff;
+  width: 330px;
+  height: 690px;
+  background-size: cover;
+  /* background: #ffffff; */
   box-shadow: 0 0 9px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 10px;
+  /* border-radius: 10px; */
   margin-left: 45px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   padding: 20px 20px;
+  justify-content: flex-end;
 }
 
 .weDoIcon {
@@ -327,7 +292,7 @@ export default {
 }
 
 .content2title {
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -336,12 +301,12 @@ export default {
   letter-spacing: 0.055em;
   text-transform: uppercase;
 
-  color: #331b3b;
+  color: #fff;
   margin-top: 10px;
 }
 
 .content2Content {
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 300;
   font-size: 15px;
@@ -349,8 +314,9 @@ export default {
 
   letter-spacing: 0.02em;
 
-  color: rgba(0, 0, 0, 0.66);
+  color: #ffffff;
   margin-top: 8px;
+  z-index: 10;
 }
 
 .story3 {
@@ -360,15 +326,30 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
-  margin-top: 1665px;
+  background-color: #652d2f;
+  /* margin-top: 10px; */
+}
+
+.title3 {
+  width: 100%;
+  display: flex;
+  /* margin-top: 30px; */
+
+  align-items: center;
+  position: relative;
+  justify-content: center;
+}
+
+.title3 img {
+  margin: 0 10px; /* 调整图片之间的间距 */
+  color: #fff;
 }
 
 .story3Img {
   width: 740px;
-  height: 700px;
+  height: 480px;
   object-fit: cover;
-
+  margin: 50px;
   margin-left: 70px;
 }
 
@@ -376,23 +357,26 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 120px;
+  /* justify-content: space-between; */
+  position: relative;
+  font-family: "Bimo Chunqiu";
+  margin-left: 20px; /* 你可以根据需要调整距离 */
 }
 
 .teamTitle {
-  font-family: "Songti SC", serif;
+  font-family: "Bimo Chunqiu", serif;
   font-style: normal;
   font-weight: 1000;
   font-size: 48px;
   line-height: 106.3%;
   text-align: center;
   letter-spacing: -0.01em;
-  color: #331b3b;
+  color: #fff;
 }
 
 .we1 {
   width: 520px;
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 17px;
@@ -400,115 +384,35 @@ export default {
 
   letter-spacing: 0.02em;
 
-  color: rgba(51, 27, 59, 0.66);
+  color: #fff;
 }
 
 .we2 {
   margin-top: 8px;
   width: 520px;
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 17px;
   line-height: 146.3%;
   letter-spacing: 0.02em;
-  color: rgba(51, 27, 59, 0.66);
+  color: #fff;
 }
 
 .bottom {
   width: 100%;
-  min-width: 1400px;
-  height: 277px;
-  background: #f5f5f5;
+  height: 200px;
+  background: #272727;
   border-radius: 0;
-  position: absolute;
-  margin-top: 2450px;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1800px;
-  /*bottom: 0;*/
-  /*margin-bottom: 0;*/
-}
-
-.bottomContent {
-  margin-left: 80px;
-}
-
-.bottomTitle {
-  margin-top: 30px;
-  font-family: "Playfair Display", serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
-  letter-spacing: 0.01em;
-
-  color: #000000;
-}
-
-.sentence {
-  font-family: "Hind Vadodara", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 159.3%;
-
-  letter-spacing: 0.02em;
-
-  color: #000000;
-}
-
-.chatUs {
-  font-family: "Hind Vadodara", sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 159.3%;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: #000000;
-  margin-top: 10px;
-}
-
-.chatContent {
-  width: 263px;
-  height: 52px;
-  border: 1px solid #000000;
-  font-size: 20px;
-}
-
-.chatButton {
-  width: 143px;
-  height: 57px;
-  background: #000000;
-  border: 1px solid #000000;
-
-  font-family: "Hind Vadodara", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 159.3%;
-
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-
-  color: #ffffff;
-}
-
-.webId {
-  font-size: 12px;
-  margin-top: 8px;
-  color: #868686;
-  cursor: pointer;
-}
-
-.webId:hover {
-  text-decoration: underline;
 }
 
 .bottomText {
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -522,7 +426,7 @@ export default {
 }
 
 .tips {
-  font-family: "PingFang SC", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -532,11 +436,11 @@ export default {
   text-align: center;
   letter-spacing: 0.02em;
 
-  color: #7b7b7b;
+  color: #fff;
 }
 
 .team {
-  font-family: "Hind Vadodara", sans-serif;
+  font-family: "Bimo Chunqiu", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -547,5 +451,26 @@ export default {
   letter-spacing: 0.02em;
   margin-top: 10px;
   color: #adadad;
+}
+
+.content2content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  opacity: 0; /* 初始时透明度为0 */
+  transition: opacity 0.3s; /* 添加过渡效果 */
+  /* 其他样式 */
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s; /* 过渡效果 */
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0; /* 过渡前后透明度为0 */
 }
 </style>

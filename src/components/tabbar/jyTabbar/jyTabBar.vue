@@ -127,7 +127,7 @@ export default {
   font-size: 24px;
   line-height: 24px;
   letter-spacing: 0.01em;
-  color: #393939;
+  color: #fff;
   display: flex;
   justify-content: space-between;
 }
