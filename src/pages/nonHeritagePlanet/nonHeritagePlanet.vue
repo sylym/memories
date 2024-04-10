@@ -8,13 +8,13 @@
       <Carousel3d
         :items="slides"
         :controls-visible="true"
-        :controls-prev-html="'&#10094;'"
-        :controls-next-html="'&#10095;'"
+        :controls-prev-html="`<div style='background-color: #b7474e; margin-left: 10px; height: 300px; display: flex; align-items: center; justify-content: center; margin: -100px 10px;'><img src='${require('../../assets/img/home/arrow_left.png')}' alt='' /></div>`"
+        :controls-next-html="`<div style='background-color: #b7474e; margin-left: 10px; height: 300px; display: flex; align-items: center; justify-content: center; margin: -100px 10px;'><img src='${require('../../assets/img/home/arrow_right.png')}' alt='' /></div>`"
         :space="220"
         :border-radius="10"
         :border="0"
         :height="475"
-        :width="1200"
+        :width="800"
       >
         <Slide v-for="(slide, index) in slides" :key="index" :index="index">
           <div class="slide1" style="display: flex">
@@ -92,9 +92,7 @@
                   :to="{ path: '/nonHeritagePlanet/ImageCreation' }"
                   style="text-decoration: none; color: inherit"
                 >
-                  <div
-                    style="width: 20px; margin-left: 100px"
-                  >
+                  <div style="width: 20px; margin-left: 10px">
                     <img
                       src="../../assets/img/home/arrow_up.png"
                       alt=""
@@ -261,26 +259,24 @@ export default {
         {
           imgUrl: require("../../assets/img/nonheritage_planet/ccr1.jpeg"),
           title: "",
-          content:
-            "",
+          content: "",
           url: "/nonHeritagePlanet/nonHeritagePlanet",
         },
         {
           imgUrl: require("../../assets/img/nonheritage_planet/ccr2.jpeg"),
           title: "",
-          content:
-            "",
+          content: "",
         },
         {
           imgUrl: require("../../assets/img/nonheritage_planet/ccr3.jpeg"),
           title: "",
-          content: "陈慧敏\n出身陶瓷世家，祖上数辈都曾从事陶瓷烧制工作,\n师从许家有、熊忠贵两位匠人，勤学苦练建盏烧制技艺",
+          content:
+            "陈慧敏\n出身陶瓷世家，祖上数辈都曾从事陶瓷烧制工作,\n师从许家有、熊忠贵两位匠人，勤学苦练建盏烧制技艺",
         },
         {
           imgUrl: require("../../assets/img/nonheritage_planet/ccr4.jpeg"),
           title: "",
-          content:
-            "",
+          content: "",
         },
       ],
     };
@@ -306,7 +302,12 @@ export default {
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
-  background-image: url("../../assets/img/nonheritage_planet/fxr_backgrounnd.png");
+  background-image: linear-gradient(
+      90deg,
+      rgba(1, 7, 68, 1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    url("../../assets/img/nonheritage_planet/fxr_backgrounnd.png");
   background-size: cover; /* 使背景图片铺满容器 */
   padding: 10px;
   width: 100%;
@@ -316,7 +317,7 @@ export default {
 .title {
   /* padding-top: 70px; */
   font-family: "Bimo Chunqiu", sans-serif;
-  margin-left: 100px;
+  margin-left: 25px;
   /* height: 29px; */
   /* line-height: 29px; */
   font-size: 36px;
@@ -326,7 +327,7 @@ export default {
 
 .name {
   font-family: "Bimo Chunqiu", sans-serif;
-  margin-left: 100px;
+  margin-left: 25px;
   /* height: 55px; */
   display: inline-block;
   /* position: relative; */
@@ -384,7 +385,7 @@ export default {
 
 .detail {
   font-family: "Bimo Chunqiu", sans-serif;
-  margin-left: 100px;
+  margin-left: 25px;
   /* width: 275px; */
   /* margin-top: 30px; */
   padding-right: 5px;
@@ -401,7 +402,7 @@ export default {
   background-color: #652d2f;
   /* margin-top: 100px; */
   position: relative;
-  background-image: url('../../assets/img/nonheritage_planet/chuanchengren.png');
+  background-image: url("../../assets/img/nonheritage_planet/chuanchengren.png");
   background-size: cover;
 }
 
