@@ -19,7 +19,10 @@
         <Slide v-for="(slide, index) in slides" :key="index" :index="index">
           <div class="slide1" style="display: flex">
             <img :src="slide.imgUrl" alt="" style="width: 572px" />
-            <div class="description">
+            <div
+              class="description"
+              :style="{ backgroundImage: getBackgroundGradient(slide) }"
+            >
               <div class="title" style="display: flex; flex-direction: column">
                 <img
                   src="../../assets/img/home/arrow_up.png"
@@ -114,26 +117,23 @@
     </div>
 
     <div class="story2">
-      <div class="title2">
-        <img src="../../assets/img/home/arrow_left.png" alt="" />
-        <p class="title2Content">合作非遗传承人</p>
-        <img src="../../assets/img/home/arrow_right.png" alt="" />
-      </div>
-      <hr
-        style="
-          background-color: #c9b3b4;
-          border: 1.5px solid rgba(255, 255, 255, 1);
-          width: 90%;
-          margin: 20px auto;
-        "
-      />
-
       <div class="content2">
+        <div class="title2Content">
+          <img src="../../assets/img/home/arrow_up.png" alt="" />
+          <p class="">合作非遗传承人</p>
+          <img src="../../assets/img/home/arrow_down.png" alt="" />
+        </div>
         <div
           v-for="(item, index) in storyContent"
           class="card"
           :key="index"
-          :style="{ backgroundImage: 'url(' + item.imgUrl + ')' }"
+          :style="{
+            backgroundImage: 'url(' + item.imgUrl + ')',
+            width: '277px',
+            height: '440px',
+            marginTop: '50px',
+            marginBottom: '50px',
+          }"
           @mouseover="showContent(index)"
           @mouseleave="hideContent(index)"
         >
@@ -288,6 +288,20 @@ export default {
     hideContent(index) {
       this.hoverIndex = null;
     },
+    getBackgroundGradient(slide) {
+      if (slide.title === "剪纸") {
+        return "linear-gradient(90deg, rgba(50, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 100%)";
+      } else if (slide.title === "皮影戏") {
+        return "linear-gradient(90deg, rgba(128, 100, 0, 1) 0%, rgba(255, 255, 255, 0) 100%)";
+      } else if (slide.title === "傩戏") {
+        return "linear-gradient(90deg, rgba(20, 20, 20, 1) 0%, rgba(255, 255, 255, 0) 100%)";
+      } else if (slide.title === "榫卯结构") {
+        return "linear-gradient(90deg, rgba(255, 240, 225, 1) 0%, rgba(255, 255, 255, 0) 100%)";
+      } else {
+        // 默认的背景图片渐变样式
+        return "linear-gradient(90deg, rgba(1, 7, 68, 1) 0%, rgba(255, 255, 255, 0) 100%)";
+      }
+    },
   },
 };
 </script>
@@ -426,12 +440,13 @@ export default {
   font-family: "Bimo Chunqiu", serif;
   font-style: normal;
   font-weight: 900;
-  font-size: 48px;
-  line-height: 106.3%;
-
+  font-size: 32px;
+  line-height: 1.5;
+  width: 42px;
   text-align: center;
   letter-spacing: -0.01em;
-
+  margin-left: 50px;
+  margin-right: 45px;
   color: #ffffff;
 }
 
