@@ -117,34 +117,38 @@
     </div>
 
     <div class="story2">
-      <div class="content2">
-        <div class="title2Content">
-          <img src="../../assets/img/home/arrow_up.png" alt="" />
-          <p class="">合作非遗传承人</p>
-          <img src="../../assets/img/home/arrow_down.png" alt="" />
-        </div>
-        <div
-          v-for="(item, index) in storyContent"
-          class="card"
-          :key="index"
-          :style="{
-            backgroundImage: 'url(' + item.imgUrl + ')',
-            width: '277px',
-            height: '440px',
-            marginTop: '50px',
-            marginBottom: '50px',
-          }"
-          @mouseover="showContent(index)"
-          @mouseleave="hideContent(index)"
-        >
-          <transition name="fade">
-            <p v-if="hoverIndex === index" class="content2title">
-              {{ item.content }}
-            </p>
-          </transition>
-          <p class="content2title">{{ item.title }}</p>
-        </div>
+      <div class="title2Content">
+        <img src="../../assets/img/home/arrow_up.png" alt="" />
+        <p class="">合作非遗传承人</p>
+        <img src="../../assets/img/home/arrow_down.png" alt="" />
       </div>
+      <carousel
+        class="carousel-container"
+        :autoplay="true"
+        :autoplayTimeout="3000"
+        :perPageCustom="[
+          [0, 1],
+          [768, 2],
+          [1024, 3],
+          [1440, 4],
+        ]"
+        :autoplayHoverPause="true"
+        :paginationEnabled="false"
+      >
+        <mySlide v-for="(item, index) in storyContent" :key="index">
+          <div class="card">
+            <img :src="item.imgUrl" alt="" class="card-image" />
+            <div class="card-content">
+              <transition name="fade">
+                <p v-if="hoverIndex === index" class="content2title">
+                  {{ item.detail }}
+                </p>
+              </transition>
+              <p class="content2title">{{ item.title }}</p>
+            </div>
+          </div>
+        </mySlide>
+      </carousel>
     </div>
 
     <div class="bottom">
@@ -204,6 +208,9 @@
 <script>
 import jyTabBar from "@/components/tabbar/jyTabbar/jyTabBar";
 import { Carousel3d, Slide } from "vue-carousel-3d";
+// import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import { Carousel, Slide as mySlide } from "vue-carousel";
+import "swiper/swiper-bundle.css";
 
 export default {
   name: "nonHeritagePlanet",
@@ -211,6 +218,8 @@ export default {
     jyTabBar,
     Carousel3d,
     Slide,
+    Carousel,
+    mySlide,
   },
   data() {
     return {
@@ -257,13 +266,13 @@ export default {
       ],
       storyContent: [
         {
-          imgUrl: require("../../assets/img/nonheritage_planet/ccr1.jpeg"),
+          imgUrl: require("../../assets/img/nonheritage_planet/ccr1.png"),
           title: "",
           content: "",
           url: "/nonHeritagePlanet/nonHeritagePlanet",
         },
         {
-          imgUrl: require("../../assets/img/nonheritage_planet/ccr2.jpeg"),
+          imgUrl: require("../../assets/img/nonheritage_planet/ccr2.png"),
           title: "",
           content: "",
         },
@@ -272,13 +281,43 @@ export default {
           title: "",
           content:
             "陈慧敏\n出身陶瓷世家，祖上数辈都曾从事陶瓷烧制工作,\n师从许家有、熊忠贵两位匠人，勤学苦练建盏烧制技艺",
+          anotherImg: require("../../assets/img/nonheritage_planet/ccr3.png")
         },
         {
-          imgUrl: require("../../assets/img/nonheritage_planet/ccr4.jpeg"),
+          imgUrl: require("../../assets/img/nonheritage_planet/ccr4.png"),
+          title: "",
+          content: "",
+        },
+        {
+          imgUrl: require("../../assets/img/nonheritage_planet/ccr5.png"),
           title: "",
           content: "",
         },
       ],
+      swiperOptions: {
+        loop: true, // 循环轮播
+        slidesPerView: 4, // 每次显示4张图片
+        spaceBetween: 30, // 图片之间的间距
+        autoplay: {
+          delay: 3000, // 自动播放间隔时间，单位为毫秒
+          disableOnInteraction: false, // 用户操作swiper后，是否禁止autoplay。默认为true：停止。
+        },
+        breakpoints: {
+          // 响应式断点设置，根据屏幕宽度调整每次显示的图片数量
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          640: {
+            slidesPerView: 1.5,
+            spaceBetween: 5,
+          },
+        },
+      },
     };
   },
   methods: {
@@ -409,15 +448,30 @@ export default {
 }
 
 .story2 {
-  display: flex;
-  flex-direction: column;
-  width: 100%; /* 设置story2的宽度 */
-  /* height: 700px; 设置为自动高度 */
-  background-color: #652d2f;
-  /* margin-top: 100px; */
   position: relative;
+  width: 100%;
+  height: 500px; /* 设置一个固定的高度值 */
+  background-color: #652d2f;
   background-image: url("../../assets/img/nonheritage_planet/chuanchengren.png");
   background-size: cover;
+  padding-top: 100px; /* 调整顶部间距 */
+  display: flex;
+  align-items: center; /* 垂直居中 */
+}
+
+.swiper-slide {
+  width: 25%;
+  height: auto;
+  margin-right: 15px; /* 设置轮播项之间的间距 */
+}
+
+.swiper-slide:last-child {
+  margin-right: 0; /* 最后一个轮播项无间距 */
+}
+
+.swiper-container {
+  width: 100%;
+  height: auto; /* 或者设置合适的高度值 */
 }
 
 .title2 {
@@ -452,7 +506,13 @@ export default {
 
 .content2 {
   display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 20px;
+}
+
+.swiper {
+  width: 100%; /* 设置轮播图容器宽度 */
 }
 
 .content2title {
@@ -461,10 +521,8 @@ export default {
   font-weight: 700;
   font-size: 20px;
   line-height: 137.3%;
-
   letter-spacing: 0.055em;
   text-transform: uppercase;
-
   color: #fff;
   margin-top: 10px;
 }
@@ -475,9 +533,7 @@ export default {
   font-weight: 300;
   font-size: 15px;
   line-height: 145.3%;
-
   letter-spacing: 0.02em;
-
   color: #ffffff;
   margin-top: 8px;
   z-index: 10;
@@ -495,18 +551,22 @@ export default {
 }
 
 .card {
-  width: 330px;
-  height: 690px;
-  background-size: cover;
-  /* background: #ffffff; */
+  width: auto;
+  height: auto;
+  /* background-color: #fff; */
   box-shadow: 0 0 9px 2px rgba(0, 0, 0, 0.05);
-  /* border-radius: 10px; */
   margin-left: 45px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  padding: 20px 20px;
   justify-content: flex-end;
+  overflow: hidden; 
+  background-size: cover;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
 }
 
 .fade-enter-active,

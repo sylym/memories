@@ -5,10 +5,41 @@
     style="display: flex; flex-direction: column; align-items: center"
   >
     <div class="story1">
-      <img
-        src="../../assets/img/home/home_description.png"
-        alt=""
-        class="story1Img"
+      <carousel
+        class="carousel-container"
+        :autoplay="true"
+        :autoplayTimeout="60000"
+        :perPage="1"
+        :autoplayHoverPause="true"
+        :paginationEnabled="false"
+        :scrollPerPage="true"
+        :minSwipeDistance="300"
+        @change="handleCarouselChange"
+      >
+        <mySlide v-for="(item, index) in videos" :key="index">
+          <div>
+            <template v-if="index === 0">
+              <!-- 第一个页面显示图片 -->
+              <img src="" />
+            </template>
+            <template v-else>
+              <!-- 其他页面显示视频 -->
+              <video
+                ref="videos"
+                :src="item.videoUrl"
+                :autoplay="isActiveVideo(index)"
+                controls
+                muted
+                loop
+              ></video>
+            </template>
+          </div>
+        </mySlide>
+      </carousel>
+      <pagination
+        :totalSlides="videos.length"
+        :currentPage="activeVideoIndex"
+        @change-slide="changeSlide"
       />
     </div>
 
@@ -130,10 +161,30 @@
 </template>
 
 <script>
+import { Carousel, Slide as mySlide } from "vue-carousel";
+import pagination from "./pagination.vue";
 export default {
   name: "home",
+  components: {
+    Carousel,
+    mySlide,
+    pagination,
+  },
   data() {
     return {
+      activeVideoIndex: 0, // 当前活动视频的索引
+      videos: [
+        {},
+        {
+          videoUrl: require("../../assets/video/1.mp4"),
+        },
+        {
+          videoUrl: require("../../assets/video/2.mp4"),
+        },
+        {
+          videoUrl: require("../../assets/video/3.mp4"),
+        },
+      ],
       hoverIndex: null,
       storyContent: [
         {
@@ -173,6 +224,37 @@ export default {
     hideContent(index) {
       this.hoverIndex = null;
     },
+    handleCarouselChange() {
+      // 更新当前活动视频的索引
+      this.activeVideoIndex = this.$refs.carousel.currentPage;
+      console.log(this.activeVideoIndex);
+    },
+    isActiveVideo(index) {
+      // 检查视频是否是当前活动视频
+      return index === this.activeVideoIndex;
+    },
+    changeSlide(index) {
+      // 切换轮播图
+      this.activeVideoIndex = index;
+    },
+  },
+  watch: {
+    activeVideoIndex(newIndex, oldIndex) {
+      // 当活动视频的索引发生变化时
+      // 暂停旧视频
+      const oldVideo = this.$refs.videos[oldIndex];
+      if (oldVideo) {
+        oldVideo.pause();
+      }
+      // 播放新视频
+      const newVideo = this.$refs.videos[newIndex];
+      if (newVideo) {
+        newVideo.play();
+      }
+    },
+    "$refs.carousel.currentPage"(newIndex, oldIndex) {
+      this.activeVideoIndex = newIndex;
+    },
   },
 };
 </script>
@@ -201,6 +283,7 @@ export default {
   height: 100%;
   /* margin-bottom: 100px;  */
   background-color: #652d2f;
+  background-image: url("../../assets/img/home/home_description.png");
 }
 
 .story1Img {
@@ -280,6 +363,21 @@ export default {
   flex-direction: column;
   padding: 20px 20px;
   justify-content: flex-end;
+}
+
+.carousel-container {
+  width: auto;
+  height: auto;
+  /* background: #ffffff; */
+  box-shadow: 0 0 9px 2px rgba(0, 0, 0, 0.05);
+  /* border-radius: 10px; */
+  margin-left: 145px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px;
+  justify-content: center;
+  align-items: center; /* 垂直居中 */
 }
 
 .weDoIcon {
