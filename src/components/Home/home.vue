@@ -5,42 +5,7 @@
     style="display: flex; flex-direction: column; align-items: center"
   >
     <div class="story1">
-      <carousel
-        class="carousel-container"
-        :autoplay="true"
-        :autoplayTimeout="60000"
-        :perPage="1"
-        :autoplayHoverPause="true"
-        :paginationEnabled="false"
-        :scrollPerPage="true"
-        :minSwipeDistance="300"
-        @change="handleCarouselChange"
-      >
-        <mySlide v-for="(item, index) in videos" :key="index">
-          <div>
-            <template v-if="index === 0">
-              <!-- 第一个页面显示图片 -->
-              <img src="" />
-            </template>
-            <template v-else>
-              <!-- 其他页面显示视频 -->
-              <video
-                ref="videos"
-                :src="item.videoUrl"
-                :autoplay="isActiveVideo(index)"
-                controls
-                muted
-                loop
-              ></video>
-            </template>
-          </div>
-        </mySlide>
-      </carousel>
-      <pagination
-        :totalSlides="videos.length"
-        :currentPage="activeVideoIndex"
-        @change-slide="changeSlide"
-      />
+      <carouselVue></carouselVue>
     </div>
 
     <div class="story2">
@@ -72,7 +37,16 @@
               {{ item.content }}
             </p>
           </transition>
-          <p class="content2title">{{ item.title }}</p>
+          <router-link
+            :to="{ path: '/nonHeritagePlanet/nonHeritagePlanet' }"
+            v-if="index === 2"
+            style="text-decoration: none; color: inherit; cursor: pointer"
+          >
+            <!-- 这里是第三个 card，所以 index === 2 -->
+            <p class="content2title">{{ item.title }}</p>
+          </router-link>
+          <p class="content2title" v-else>{{ item.title }}</p>
+          <!-- 如果不是第三个 card，正常显示标题 -->
         </div>
       </div>
     </div>
@@ -163,12 +137,14 @@
 <script>
 import { Carousel, Slide as mySlide } from "vue-carousel";
 import pagination from "./pagination.vue";
+import carouselVue from "./carousel.vue";
 export default {
   name: "home",
   components: {
     Carousel,
     mySlide,
     pagination,
+    carouselVue,
   },
   data() {
     return {
@@ -224,37 +200,6 @@ export default {
     hideContent(index) {
       this.hoverIndex = null;
     },
-    handleCarouselChange() {
-      // 更新当前活动视频的索引
-      this.activeVideoIndex = this.$refs.carousel.currentPage;
-      console.log(this.activeVideoIndex);
-    },
-    isActiveVideo(index) {
-      // 检查视频是否是当前活动视频
-      return index === this.activeVideoIndex;
-    },
-    changeSlide(index) {
-      // 切换轮播图
-      this.activeVideoIndex = index;
-    },
-  },
-  watch: {
-    activeVideoIndex(newIndex, oldIndex) {
-      // 当活动视频的索引发生变化时
-      // 暂停旧视频
-      const oldVideo = this.$refs.videos[oldIndex];
-      if (oldVideo) {
-        oldVideo.pause();
-      }
-      // 播放新视频
-      const newVideo = this.$refs.videos[newIndex];
-      if (newVideo) {
-        newVideo.play();
-      }
-    },
-    "$refs.carousel.currentPage"(newIndex, oldIndex) {
-      this.activeVideoIndex = newIndex;
-    },
   },
 };
 </script>
@@ -277,21 +222,9 @@ export default {
 
 .story1 {
   position: relative;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  /* margin-bottom: 100px;  */
   background-color: #652d2f;
-  background-image: url("../../assets/img/home/home_description.png");
-}
-
-.story1Img {
-  width: 100%;
-  /*height: 330px;*/
-  object-fit: cover;
-  /*background-color: #C71010;*/
-  background-size: auto;
+  /* background-image: url("../../assets/img/home/home_description.png"); */
 }
 
 .line {
@@ -365,29 +298,6 @@ export default {
   justify-content: flex-end;
 }
 
-.carousel-container {
-  width: auto;
-  height: auto;
-  /* background: #ffffff; */
-  box-shadow: 0 0 9px 2px rgba(0, 0, 0, 0.05);
-  /* border-radius: 10px; */
-  margin-left: 145px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 20px;
-  justify-content: center;
-  align-items: center; /* 垂直居中 */
-}
-
-.weDoIcon {
-  width: 52px;
-  height: 48px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .content2title {
   font-family: "Bimo Chunqiu", sans-serif;

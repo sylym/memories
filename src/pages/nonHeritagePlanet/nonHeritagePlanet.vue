@@ -125,7 +125,8 @@
       <carousel
         class="carousel-container"
         :autoplay="true"
-        :autoplayTimeout="3000"
+        :autoplayTimeout="1000"
+        :loop="true"
         :perPageCustom="[
           [0, 1],
           [768, 2],
@@ -136,8 +137,19 @@
         :paginationEnabled="false"
       >
         <mySlide v-for="(item, index) in storyContent" :key="index">
-          <div class="card">
-            <img :src="item.imgUrl" alt="" class="card-image" />
+          <div
+            class="card"
+            @mouseover="showContent(index)"
+            @mouseleave="hideContent(index)"
+          >
+            <img
+              :src="item.imgUrl"
+              :data-hover-src="item.hoverImgUrl"
+              alt=""
+              class="card-image"
+              @mouseover="changeImage($event, index)"
+              @mouseleave="restoreImage($event, index)"
+            />
             <div class="card-content">
               <transition name="fade">
                 <p v-if="hoverIndex === index" class="content2title">
@@ -269,29 +281,32 @@ export default {
           imgUrl: require("../../assets/img/nonheritage_planet/ccr1.png"),
           title: "",
           content: "",
-          url: "/nonHeritagePlanet/nonHeritagePlanet",
+          hoverImgUrl: "",
         },
         {
           imgUrl: require("../../assets/img/nonheritage_planet/ccr2.png"),
           title: "",
           content: "",
+          hoverImgUrl: "",
         },
         {
-          imgUrl: require("../../assets/img/nonheritage_planet/ccr3.jpeg"),
+          imgUrl: require("../../assets/img/nonheritage_planet/ccr3_origin.png"),
           title: "",
           content:
             "陈慧敏\n出身陶瓷世家，祖上数辈都曾从事陶瓷烧制工作,\n师从许家有、熊忠贵两位匠人，勤学苦练建盏烧制技艺",
-          anotherImg: require("../../assets/img/nonheritage_planet/ccr3.png")
+          hoverImgUrl: require("../../assets/img/nonheritage_planet/ccr3.png"),
         },
         {
           imgUrl: require("../../assets/img/nonheritage_planet/ccr4.png"),
           title: "",
           content: "",
+          hoverImgUrl: "",
         },
         {
           imgUrl: require("../../assets/img/nonheritage_planet/ccr5.png"),
           title: "",
           content: "",
+          hoverImgUrl: "",
         },
       ],
       swiperOptions: {
@@ -340,6 +355,20 @@ export default {
         // 默认的背景图片渐变样式
         return "linear-gradient(90deg, rgba(1, 7, 68, 1) 0%, rgba(255, 255, 255, 0) 100%)";
       }
+    },
+    changeImage(event, index) {
+      if (event.target.dataset.hoverSrc) {
+        event.target.src = event.target.dataset.hoverSrc;
+      }
+    },
+    restoreImage(event, index) {
+      event.target.src = this.storyContent[index].imgUrl;
+    },
+    showContent(index) {
+      this.hoverIndex = index;
+    },
+    hideContent() {
+      this.hoverIndex = null;
     },
   },
 };
@@ -438,13 +467,13 @@ export default {
 
 .detail {
   font-family: "Bimo Chunqiu", sans-serif;
-  margin-left: 25px;
-  /* width: 275px; */
+  margin-left: 20px;
+  width: auto;
   /* margin-top: 30px; */
-  padding-right: 5px;
+  /* padding-right: 5px; */
   /* line-height: 24px; */
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .story2 {
@@ -560,7 +589,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  overflow: hidden; 
+  overflow: hidden;
   background-size: cover;
 }
 
