@@ -137,7 +137,6 @@
 <script>
 import { Carousel, Slide as mySlide } from "vue-carousel";
 import pagination from "./pagination.vue";
-import carouselVue from "./carousel.vue";
 export default {
   name: "home",
   components: {
