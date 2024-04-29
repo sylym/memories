@@ -213,9 +213,7 @@ export default {
 }
 
 .background {
-  min-width: 1400px;
   width: 100%;
-  max-width: 1800px;
   position: absolute;
   /*background-color: #C71010;*/
 }
