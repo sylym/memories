@@ -12,9 +12,6 @@
 
         <span class="logo-text">云织非遗</span>
       </div>
-      <router-link :to="{ path: '/userProfile/login' }">
-        <button class="login-button">立即登录</button>
-      </router-link>
     </header>
     <div class="chat-container">
       <!-- 左侧历史会话列表 -->
@@ -44,7 +41,7 @@
             <div v-if="message.type === 'user'" class="user-message">
               {{ message.text }}
             </div>
-            <div v-else class="bot-message">{{ message.text.answer }}</div>
+            <div v-else class="bot-message">{{ message.text }}</div>
           </div>
         </div>
 
@@ -59,7 +56,7 @@
             placeholder="Type your message..."
             rows="2"
           ></textarea>
-          <button class="icon-button send-button absolute" @click="sendMessage">
+          <button class="icon-button send-button absolute" :disabled="sendMessageDisabled" @click="sendMessage">
             <!-- 替换成SVG图标 -->
             <svg
               class="icon-svg"
@@ -86,6 +83,7 @@
 <script>
 import Sidebar from "../../components/Sidebar.vue";
 import axios from "axios";
+import socketIOClient from 'socket.io-client'
 
 export default {
   name: "ChatPage",
@@ -94,48 +92,87 @@ export default {
       messages: [],
       newMessage: "",
       messageListHeight: "calc(100vh - 200px)", // 初始化为页面高度减去200像素的余量
+      socket: null,
+      socketIOClientId: '',
+      sendMessageDisabled: false,
     };
   },
   components: {
     Sidebar,
   },
+  created() {
+    // 建立连接
+    this.socket = socketIOClient("https://flowise.ichol.tech"); // 请根据需要调整URL
+
+    // 监听连接
+    this.socket.on('connect', () => {
+      this.socketIOClientId = this.socket.id;
+      console.log('Connected with ID:', this.socketIOClientId);
+    });
+
+    // 监听其他事件
+    this.socket.on('start', () => {
+      this.messages.push({
+        type: "bot",
+        text: "",
+      });
+    });
+    this.socket.on('token', token => {
+      const lastIndex = this.messages.slice().reverse().findIndex(message => message.type === "bot");
+      const index = lastIndex >= 0 ? this.messages.length - 1 - lastIndex : -1;
+      const updatedMessage = {
+        ...this.messages[index],
+        text: this.messages[index].text + token
+      };
+      this.messages.splice(index, 1, updatedMessage);
+    });
+    this.socket.on('sourceDocuments', sourceDocuments => console.log('sourceDocuments:', sourceDocuments));
+    this.socket.on('end', () => console.log('end'));
+  },
+
   methods: {
+    async fetchMessage(data) {
+      const response = await fetch(
+          "https://flowise.ichol.tech/api/v1/prediction/e58b3802-1902-4cc4-8578-26118b8ba79b",
+          {
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(data)
+          }
+      );
+      const result = await response.json();
+      return result;
+    },
     sendMessage() {
-      if (this.newMessage.trim() !== "") {
+      if (this.newMessage.trim() !== "" && !this.sendMessageDisabled) {
         // 用户输入
         this.messages.push({
           type: "user",
           text: this.newMessage,
           // avatar: "../../assets/img/user.png",
         });
-        // 在这里发送消息给机器人，并处理机器人的回复
-        // 你可以调用后端接口或者其他方式来实现机器人对话的功能
-        // 示例：假设机器人的回复是预先定义好的，可以直接添加到消息列表中
-        axios
-          .post("https://chatapi.ichol.tech/answer", {
-            question: this.newMessage,
-          })
-          .then((response) => {
-            const botReply = response.data; // 假设机器人回复存储在response.data中，需要根据实际情况调整
-            this.messages.push({
-              type: "bot",
-              text: botReply,
-              // avatar: "../../assets/img/bot.png",
-            });
-            // 清空输入框
-            this.newMessage = "";
-            // 滚动到消息列表底部
-            this.$nextTick(() => {
-              this.$refs.messageList.scrollTop =
+        const question = this.newMessage;
+        this.newMessage = "";
+        this.sendMessageDisabled = true;
+        this.fetchMessage({
+          "question": question,
+          "socketIOClientId": this.socketIOClientId
+        }).then((response) => {
+          // 滚动到消息列表底部
+          this.$nextTick(() => {
+            this.$refs.messageList.scrollTop =
                 this.$refs.messageList.scrollHeight;
-            });
-          })
-          .catch((error) => {
-            console.error("Error fetching bot reply:", error);
-            alert("Error fetching bot reply:", error);
           });
+          this.sendMessageDisabled = false;
+        }).catch((error) => {
+          console.error("Error fetching bot reply:", error);
+          alert("Error fetching bot reply:", error);
+        });
       }
     },
+
     handleConversationSelected(conversation) {
       // 假设`messages`是你用来在模板中展示消息的数组
       // 现在将其更新为选中会话的消息数组
@@ -153,6 +190,9 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.updateMessageListHeight);
+    if (this.socket) {
+      this.socket.disconnect();
+    }
   },
 };
 </script>

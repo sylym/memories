@@ -41,7 +41,7 @@
 <script>
 import axios from 'axios'
 import TagsAdd from './TagsAdd.vue'
-const DEFAULT_NAGATIVE_PROMPT = "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, artist name, bad feet,(bad hands),(bad breasts)"
+const DEFAULT_NAGATIVE_PROMPT = ""
 
 export default {
   components: {
