@@ -147,27 +147,27 @@ const routes = [
           {
             path: "menu",
             component: EnterMenu,
-            name: "走进纪艺",
+            name: "走进艺链智绘",
           },
           {
             path: 'inheritor',      //传承人
             component: Inheritor,
-            name: "走进纪艺-我是传承人"
+            name: "走进艺链智绘-我是传承人"
           },
           {
             path: 'campus',    //我是高校
             component: Campus,
-            name: "走进纪艺-我是高校"
+            name: "走进艺链智绘-我是高校"
           },
           {
             path: 'program',   //了解程序
             component: Program,
-            name: "走进纪艺-了解程序"
+            name: "走进艺链智绘-了解程序"
           },
           {
             path: 'weChat',          //添加微信
             component: AddWeChat,
-            name: "走进纪艺-添加微信"
+            name: "走进艺链智绘-添加微信"
           },
           {
             path: 'creator',

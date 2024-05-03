@@ -7,6 +7,7 @@
         <!--普通导航栏-->
         <div
           v-for="(item, index) in normalTitle"
+          :key="index"
           id="title1"
           class="normal"
           @click="page(item)"

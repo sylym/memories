@@ -11,9 +11,9 @@
       </div>
       <div style="display: flex;top: 0;width: 100%;justify-content: space-between">
         <div style="background-color: #000;display: flex;align-items: center;justify-content: center;width: 40%;cursor: pointer" class="pageTitle" @click="changePage(path2[1])">
-          走 进 云 织 非 遗
+          走 进 艺 链 智 绘
         </div>
-        <img :src="path2[1].imgUrl" alt="走进云织非遗" class="image">
+        <img :src="path2[1].imgUrl" alt="走进艺链智绘" class="image">
       </div>
       <div style="height: 85px;width: 100%;min-width: 1400px;display: flex;justify-content: center;align-items: center">
         <div style="width: 490px;height:1px;background-color: #A5A5A5"></div>
@@ -35,7 +35,7 @@ export default {
       ],
       path2: [
         {imgUrl: this.$store.state.imgBaseUrl+"/%E6%95%B0%E5%AD%97%E5%8D%9A%E7%89%A9%E9%A6%86%E9%A6%96%E9%A1%B5-03.png", title: "公益追溯", url: "/welfare"},
-        {imgUrl: this.$store.state.imgBaseUrl+"/%E6%95%B0%E5%AD%97%E5%8D%9A%E7%89%A9%E9%A6%86%E9%A6%96%E9%A1%B5-04.png", title: "走进云织非遗", url: "/enter"}
+        {imgUrl: this.$store.state.imgBaseUrl+"/%E6%95%B0%E5%AD%97%E5%8D%9A%E7%89%A9%E9%A6%86%E9%A6%96%E9%A1%B5-04.png", title: "走进艺链智绘", url: "/enter"}
       ],
       normalTitle: [
         { title: "首页", url: "/home" },
