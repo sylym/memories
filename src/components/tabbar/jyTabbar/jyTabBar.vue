@@ -52,7 +52,7 @@
       <a href="/home"
         ><img
           src="../../../assets/img/logo.png"
-          alt="云织非遗"
+          alt="艺链智绘"
           style="width: 220px; object-fit: cover"
       /></a>
     </p>
