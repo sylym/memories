@@ -211,6 +211,18 @@ export default {
     });
   },
   methods: {
+    handleMapClick(params) {
+      console.log(params.name, params.value)
+      let clickedName = params.name
+      if (clickedName ==='贵州') {
+        this.$router.push({path: '/exhibition/allWorks/provinceWorks', query: { name: clickedName, number: params.value}})
+      }
+      // let clickedData = this.findDataByName(clickedName)
+
+    },
+    // findDataByName(name) {
+
+    // }
     handleSizeChange(val){
 
     },
@@ -389,7 +401,7 @@ export default {
       //指定图表的配置项和数据，绘制图表
       myChart.setOption({
         tooltip: {
-          show: false,
+          show: true,
           extraCssText: "z-index: 2",
           trigger: "item",
           formatter: function (params) {
@@ -619,6 +631,8 @@ export default {
     },
   },
   mounted() {
+    let myChart = this.$echarts.init(this.$refs.map);
+    myChart.on('click', this.handleMapClick);
     this.getmap();
   },
 };

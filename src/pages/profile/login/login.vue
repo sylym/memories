@@ -4,7 +4,7 @@
       <img src="https://s1.ax1x.com/2022/06/24/jFtxE9.png" alt="back" class="back">
       <div class="loginContent" v-if="$store.state.token === ''">
         <div class="left">
-          <img :src="`https://s11.ax1x.com/2024/03/03/pFB0XfP.png`" class="jyFont" alt="jyFont">
+          <img src="../../../assets/img/text.png" class="jyFont" alt="jyFont">
           <p class="projectName" style="margin-top: 15px;">非遗数字作品创益馆</p>
           <div class="line">
             <div class="line1"></div>

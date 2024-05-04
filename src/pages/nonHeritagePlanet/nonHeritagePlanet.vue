@@ -5,96 +5,35 @@
       <jy-tab-bar :normal-title="normalTitle" :is-back="false"></jy-tab-bar>
     </div>
 
-    <br /><br /><br />
-    <div class="banner">
-      <div class="swiper">
-        <!-- 当前轮播图 -->
-        <div class="current-swiper swiper-container">
-          <div class="swiper-wrapper">
-            <router-link
-              :to="{ path: '/nonHeritagePlanet/imageCreation' }"
-              class="swiper-slide slide1"
-            >
-              <div class="title">{{ slides[0].title }}</div>
-              <div class="name">{{ slides[0].name }}</div>
-              <p class="detail">{{ slides[0].detail }}</p>
-            </router-link>
-            <router-link
-              :to="{ path: '/nonHeritagePlanet/QuestionAndAnswer' }"
-              class="swiper-slide slide2"
-            >
-              <div class="title">{{ slides[1].title }}</div>
-              <div class="name">{{ slides[1].name }}</div>
-              <p class="detail">{{ slides[1].detail }}</p>
-            </router-link>
-            <router-link
-              :to="{ path: '/nonHeritagePlanet/QuestionAndAnswer' }"
-              class="swiper-slide slide3"
-            >
-              <div class="title">{{ slides[2].title }}</div>
-              <div class="name">{{ slides[2].name }}</div>
-              <p class="detail">{{ slides[2].detail }}</p>
-            </router-link>
-          </div>
+    <div class="carousel-container">
+      <!-- 轮播图 -->
+      <transition name="fade">
+        <div class="carousel-row">
+          <Carousel
+            v-for="n in 5"
+            :key="n"
+            :images="carouselImages"
+            :current-index="(currentIndex + n - 1) % 5"
+            :style="{ transform: `scale(${computeScale(n - 1)})` }"
+          ></Carousel>
         </div>
+      </transition>
 
-        <!-- 左侧轮播图 -->
-        <div class="nocurrent-swiper left-swiper swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide slide3">
-              <div class="title">{{ slides[2].title }}</div>
-              <div class="name">{{ slides[2].name }}</div>
-              <p class="detail">{{ slides[2].detail }}</p>
-            </div>
-            <div class="swiper-slide slide1">
-              <div class="title">{{ slides[0].title }}</div>
-              <div class="name">{{ slides[0].name }}</div>
-              <p class="detail">{{ slides[0].detail }}</p>
-            </div>
-            <div class="swiper-slide slide2">
-              <div class="title">{{ slides[1].title }}</div>
-              <div class="name">{{ slides[1].name }}</div>
-              <p class="detail">{{ slides[1].detail }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 右侧轮播图 -->
-        <div class="nocurrent-swiper right-swiper swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide slide2">
-              <div class="title">{{ slides[1].title }}</div>
-              <div class="name">{{ slides[1].name }}</div>
-              <p class="detail">{{ slides[1].detail }}</p>
-            </div>
-            <div class="swiper-slide slide3">
-              <div class="title">{{ slides[2].title }}</div>
-              <div class="name">{{ slides[2].name }}</div>
-              <p class="detail">{{ slides[2].detail }}</p>
-            </div>
-            <div class="swiper-slide slide1">
-              <div class="title">{{ slides[0].title }}</div>
-              <div class="name">{{ slides[0].name }}</div>
-              <p class="detail">{{ slides[0].detail }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="swiper-button-prev" @click="prevSlide"></div>
-        <div class="swiper-button-next" @click="nextSlide"></div>
-      </div>
+      <button class="prev-button" @click="prevSlide">⟨</button>
+      <button class="next-button" @click="nextSlide">⟩</button>
     </div>
   </div>
 </template>
 
 <script>
-import Swiper from "swiper";
-import "../../assets/css/swiper.min.css";
 import jyTabBar from "@/components/tabbar/jyTabbar/jyTabBar";
+import Carousel from "./Carousel.vue";
 
 export default {
   name: "nonHeritagePlanet",
   components: {
     jyTabBar,
+    Carousel,
   },
   data() {
     return {
@@ -111,217 +50,141 @@ export default {
               : "/userProfile/userInfo",
         },
       ],
-      slides: [
+      carouselImages: [
         {
-          title: "",
-          name: "图片创作",
-          detail: "",
+          src: "https://s21.ax1x.com/2024/03/14/pFcvCcQ.png",
+          link: "/nonHeritagePlanet/imageCreation",
+          description: "剪纸",
         },
         {
-          title: "",
-          name: "非遗问答",
-          detail: "",
+          src: "https://s21.ax1x.com/2024/03/14/pFcv91g.png",
+          link: "/nonHeritagePlanet/imageCreation",
+          description: "皮影戏",
         },
         {
-          title: "",
-          name: "",
-          detail: "",
+          src: "https://s21.ax1x.com/2024/03/14/pFcjxtf.png",
+          link: "/nonHeritagePlanet/imageCreation",
+          description: "枫香染",
         },
+        {
+          src: "https://s21.ax1x.com/2024/03/14/pFcjzh8.png",
+          link: "/nonHeritagePlanet/QuestionAndAnswer",
+          description: "傩戏",
+        },
+        {
+          src: "https://s21.ax1x.com/2024/03/14/pFcvp9S.png",
+          link: "/nonHeritagePlanet/QuestionAndAnswer",
+          description: "榫卯",
+        },
+        // 添加更多轮播图项
       ],
-      swiper: null,
-      leftSwiper: null,
-      rightSwiper: null,
+      currentIndex: 0,
     };
-  },
-  mounted() {
-    // 初始化当前轮播
-    this.swiper = new Swiper(".current-swiper", {
-      loop: true,
-    });
-
-    // 初始化左侧轮播
-    this.leftSwiper = new Swiper(".left-swiper", {
-      loop: true,
-      simulateTouch: false,
-    });
-
-    // 初始化右侧轮播
-    this.rightSwiper = new Swiper(".right-swiper", {
-      loop: true,
-      simulateTouch: false,
-    });
-
-    // 当 Swiper 实例初始化完成后再添加事件监听
-    this.swiper.on("init", () => {
-      this.swiper.on("slideChange", () => {
-        const currentIndex = this.swiper.activeIndex;
-        // 同步调整左侧轮播图的位置
-        this.leftSwiper.slideTo(currentIndex);
-        // 同步调整右侧轮播图的位置
-        this.rightSwiper.slideTo(currentIndex);
-      });
-    });
-
-    // 控制当前轮播与左右两侧轮播的关联
-    // this.swiper.controller.control = [this.leftSwiper, this.rightSwiper];
   },
   methods: {
     prevSlide() {
-      this.swiper.slidePrev();
-      this.leftSwiper.slidePrev();
-      this.rightSwiper.slidePrev();
+      this.currentIndex =
+        (this.currentIndex - 1 + this.carouselImages.length) %
+        this.carouselImages.length;
     },
     nextSlide() {
-      this.swiper.slideNext();
-      this.leftSwiper.slideNext();
-      this.rightSwiper.slideNext();
+      this.currentIndex = (this.currentIndex + 1) % this.carouselImages.length;
+    },
+    computeScale(index) {
+      const totalCarousels = 5; // 假设总共有5个Carousel组件
+      const middleIndex = Math.floor(totalCarousels / 2);
+      const distanceFromMiddle = Math.abs(
+        index - (middleIndex % totalCarousels)
+      );
+
+      if (distanceFromMiddle === 0) {
+        return 1; // 中间的Carousel最大
+      } else if (distanceFromMiddle === 1) {
+        return 0.8; // 紧邻中间的稍小一些
+      } else {
+        return 0.6; // 更远的则更小
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-.banner {
-  padding-top: 80px;
-}
-.banner .swiper {
-  width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
-.current-swiper {
-  width: 650px;
-  height: 370px;
-  border-radius: 10px;
-  margin: 0 auto;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-  position: relative;
-  z-index: 99;
-}
-.left-swiper {
-  position: absolute;
-  left: 117px;
-  top: 52px;
-  z-index: 1;
-}
-.right-swiper {
-  position: absolute;
-  right: 117px;
-  left: auto;
-  top: 52px;
-  z-index: 1;
-}
 
-.current-swiper,
-.left-swiper,
-.right-swiper {
-  border-radius: 50%;
-}
-
-.nocurrent-swiper {
-  width: 479px;
-  height: 273px;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-}
-.nocurrent-swiper:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+.carousel-container {
+  position: relative;
   width: 100%;
-  height: 100%;
-  background: rgba(237, 240, 240, 0.9);
-  z-index: 99;
+  overflow: hidden;
+  background-color: #581526;
+  /* 添加背景颜色，根据实际需求调整 */
+  margin-top: 75px;
+  /* 与顶部的距离，根据实际需求调整 */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  /* 垂直居中图片 */
+  justify-content: center;
+  /* 水平居中图片 */
 }
-.slide1 {
-  background: url("https://s11.ax1x.com/2024/03/02/pF00IvF.jpg") no-repeat right
-    50% / auto 100% #fff;
+
+.carousel-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.slide2 {
-  background: url("https://s11.ax1x.com/2024/03/02/pF00Hb9.jpg") no-repeat right
-    50% / auto 100% #e2e3e8;
+
+.carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  max-height: 80vh;
+  width: auto;
 }
-.slide3 {
-  background: url("https://s11.ax1x.com/2024/03/02/pF00Hb9.jpg") no-repeat right
-    50% / auto 100% #f0faf9;
+
+.carousel-slide {
+  flex: 0 0 100%;
 }
-.title {
-  padding-top: 70px;
-  margin-left: 45px;
-  height: 29px;
-  line-height: 29px;
-  font-size: 18px;
-  color: #666;
+
+.carousel-row {
+  display: flex;
+  justify-content: space-between;
 }
-.nocurrent-swiper .title {
-  padding-top: 44px;
-  margin-left: 30px;
-  font-size: 16px;
-  height: 25px;
-  line-height: 25px;
-}
-.name {
-  margin-left: 45px;
-  height: 55px;
-  display: inline-block;
-  position: relative;
-  line-height: 55px;
-  padding-bottom: 9px;
-  padding-right: 55px;
-  border-bottom: 1px solid #dddddd;
-  font-size: 36px;
-  color: #333;
-}
-.nocurrent-swiper .name {
-  height: 46px;
-  line-height: 46px;
-  font-size: 30px;
-  padding-right: 46px;
-  margin-left: 30px;
-}
-.name:before {
-  content: "";
+
+.prev-button,
+.next-button {
   position: absolute;
-  width: 30px;
-  height: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  /* 调整箭头的大小 */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  /* 调整箭头的颜色 */
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
   right: 10px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  background: url("https://s21.ax1x.com/2024/03/11/pF6dhzq.png") no-repeat
-    center center;
 }
-.nocurrent-swiper .name:before {
-  width: 26px;
-  height: 26px;
-  background-size: 100% 100%;
+
+.image-description {
+  color: #fff;
+  /* 调整说明文字颜色 */
+  font-size: 28px;
+  /* 调整说明文字大小 */
+  /* margin-top: 20px; */
+  /* 调整说明文字与图片的距离 */
 }
-.detail {
-  margin-left: 45px;
-  width: 275px;
-  margin-top: 30px;
-  padding-right: 5px;
-  line-height: 24px;
-  color: #bbb;
-  font-size: 14px;
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.nocurrent-swiper .detail {
-  font-size: 12px;
-  line-height: 20px;
-  width: 235px;
-  margin-left: 30px;
-}
-.swiper-button-prev {
-  width: 46px;
-  height: 46px;
-  background: url("https://s21.ax1x.com/2024/03/11/pF6dfWn.png") no-repeat
-    center center;
-}
-.swiper-button-next {
-  width: 46px;
-  height: 46px;
-  background-size: auto;
-  background-image: url("https://s21.ax1x.com/2024/03/11/pF6dcdg.png");
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
 }
 </style>

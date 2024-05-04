@@ -7,14 +7,14 @@
       </div>
     </div>
     <div class="story1">
-      <img :src="`https://s11.ax1x.com/2024/03/03/pFB0XfP.png`" class="story1Img" alt="story1Img">
+      <img src="../../assets/img/text.png" class="story1Img" alt="story1Img">
       <p class="projectName" style="margin-top: 20px;">非遗数字作品创益馆</p>
       <div class="line">
         <div class="line1"></div>
         <div class="line2"></div>
       </div>
       <div class="content1">
-        “云织非遗”是对非物质文化遗产的记录更是对民族记忆的保护。“创益”不仅代表平台上多种多样的创益数字艺术品，更代表着平台对非遗传承的公益服务以及为我们为非遗传承创造丰厚价值的信心。
+        “艺链智绘”是对非物质文化遗产的记录更是对民族记忆的保护。“创益”不仅代表平台上多种多样的创益数字艺术品，更代表着平台对非遗传承的公益服务以及为我们为非遗传承创造丰厚价值的信心。
       </div>
     </div>
     <div class="story2">
@@ -56,7 +56,7 @@
     </div>
     <div class="bottom">
       <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;width: 50%">
-        <img :src="`https://s11.ax1x.com/2024/03/04/pFDVe2T.png`" style="width: 220px;object-fit: cover" alt="云织非遗">
+        <img src="../../assets/img/logo.png" style="width: 220px;object-fit: cover" alt="艺链智绘">
         <div class="bottomText" style="margin-top: 15px">欢迎所有非遗爱好者与我们一同见证</div>
         <div class="bottomText">“非遗文化数字化的新纪元”</div>
       </div>
@@ -69,7 +69,7 @@
           <div style="width: 1px;height: 32px;background-color: #D4D4D4"></div>
           <div style="width: 160px;text-align: center">免责声明</div>
         </div>
-        <p class="team">网站建设团队：北京邮电大学云织非遗团队</p>
+        <p class="team">网站建设团队：北京邮电大学艺链智绘团队</p>
       </div>
     </div>
   </div>

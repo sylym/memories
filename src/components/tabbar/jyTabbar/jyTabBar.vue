@@ -7,6 +7,7 @@
         <!--普通导航栏-->
         <div
           v-for="(item, index) in normalTitle"
+          :key="index"
           id="title1"
           class="normal"
           @click="page(item)"
@@ -50,8 +51,8 @@
     <p class="center">
       <a href="/home"
         ><img
-          :src="`https://s11.ax1x.com/2024/03/04/pFDVe2T.png`"
-          alt="云织非遗"
+          src="../../../assets/img/logo.png"
+          alt="艺链智绘"
           style="width: 220px; object-fit: cover"
       /></a>
     </p>
