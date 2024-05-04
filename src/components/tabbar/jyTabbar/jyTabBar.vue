@@ -51,7 +51,7 @@
     <p class="center">
       <a href="/home"
         ><img
-          :src="`https://s11.ax1x.com/2024/03/04/pFDVe2T.png`"
+          src="../../../assets/img/logo.png"
           alt="云织非遗"
           style="width: 220px; object-fit: cover"
       /></a>

@@ -56,7 +56,7 @@
     </div>
     <div class="bottom">
       <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;width: 50%">
-        <img :src="`https://s11.ax1x.com/2024/03/04/pFDVe2T.png`" style="width: 220px;object-fit: cover" alt="艺链智绘">
+        <img src="../../assets/img/logo.png" style="width: 220px;object-fit: cover" alt="艺链智绘">
         <div class="bottomText" style="margin-top: 15px">欢迎所有非遗爱好者与我们一同见证</div>
         <div class="bottomText">“非遗文化数字化的新纪元”</div>
       </div>
