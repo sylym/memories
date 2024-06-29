@@ -182,7 +182,7 @@
 
 import * as API from "@/api";
 
-const IMAGE_GET_URL = "https://sdapi.ichol.tech/api/readImage?id="
+const IMAGE_GET_URL = "https://sdapi.ichbupt.cn/api/readImage?id="
 
 import { ref } from 'vue'
 export default {

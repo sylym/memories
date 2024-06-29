@@ -4,7 +4,7 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 
 const axio = axios.create({
-    baseURL: 'https://sdapi.ichol.tech',
+    baseURL: 'https://sdapi.ichbupt.cn',
     timeout: 100000000
 })
 

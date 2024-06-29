@@ -85,7 +85,7 @@
 
 
 <script >
-const SERVER_DOMAIN = "https://sdapi.ichol.tech"
+const SERVER_DOMAIN = "https://sdapi.ichbupt.cn"
 export default {
   data() {
     return {
