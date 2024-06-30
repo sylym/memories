@@ -105,6 +105,7 @@ export default {
           }
           this.$store.commit('storageUserInfo', userInfo);
           this.loaded = true;
+          console.log(this.$store.state.userInfo.username)
           window.removeEventListener('message', this.receiveMessage);
         }
       }
