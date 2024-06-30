@@ -277,8 +277,6 @@ export default {
         return
       }
       this.isComing = true
-      const userInfo = await API.getUserInfo()
-      this.$store.commit('storageUserInfo', userInfo)
 
       this.$myFetch('/api/photos', 'POST', { 'size': sizeNum, "email": this.$store.state.userInfo.username })
           .then(result => {

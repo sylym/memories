@@ -8,18 +8,12 @@ import Go from './go.vue'
 </script>
 
 <template>
-  <div>
-    <el-header class="header">
-    <div style="position: absolute; z-index: 2; top: 0; left: 0; right: 0;">
-        <!-- 导航栏 -->
-        <jy-tab-bar :normal-title="normalTitle" :is-back="false"></jy-tab-bar>
-    </div>
-    </el-header>
+  <div v-if="loaded">
     <el-aside class="aside">
       <!-- 侧边栏内容 -->
       <Go />
     </el-aside>
-    <el-main class="main" v-infinite-scroll="callChildloadMore" infinite-scroll-delay="100" infinite-scroll-distance="50" :infinite-scroll-disabled='disabled' :style="contentStyleObj">
+    <el-main class="main" v-infinite-scroll="callChildloadMore" infinite-scroll-delay="100" infinite-scroll-distance="50" :infinite-scroll-disabled='disabled'>
       <!-- 主要内容 -->
       <el-backtop :bottom="100" target=".el-main" :visibility-height="200">
         返回顶部
@@ -78,10 +72,12 @@ export default {
       disabled:false,
       contentStyleObj: {
         height: ''
-      }
+      },
+      loaded: false
     }
   },
   created() {
+    window.addEventListener('message', this.receiveMessage);
     this.getHight()
     window.addEventListener('resize', this.getHight);
     this.setPage()
@@ -100,6 +96,19 @@ export default {
     });
   },
   methods: {
+    receiveMessage(event) {
+      if (typeof event.data === "string") {
+        if (event.data.indexOf("|") !== -1){
+          const [username, createdDatetime] = event.data.split("|");
+          const userInfo = {
+            username: username + ' ' + createdDatetime,
+          }
+          this.$store.commit('storageUserInfo', userInfo);
+          this.loaded = true;
+          window.removeEventListener('message', this.receiveMessage);
+        }
+      }
+    },
     setPage() {
       this.imageCreationRegister()
       this.check()
@@ -261,7 +270,7 @@ a:hover {
 .aside {
   position: fixed;
   left: 5px;
-  top: 50px;
+  top: 10px;
   bottom: 60px;
   /* 头部高度 */
   width: 300px;
@@ -272,10 +281,10 @@ a:hover {
   position: fixed;
   overflow-y: auto;
   margin-left: 300px;
-  /* 侧边栏宽度 */
-  margin-top: 50px;
-  /* 头部高度 */
-  margin-bottom: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+  bottom: 40px;
+  top: 10px;
 }
 
 .footer {
