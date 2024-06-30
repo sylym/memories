@@ -4,7 +4,8 @@ import VueCookies from "vue-cookies";
 
 let keyStr = ""
 export function getKey() {
-    const toekn = md5(VueCookies.get('token')) //localStorage.getItem('token'))
+    const currentUTCDate = new Date().toISOString().split('T')[0];
+    const toekn = CryptoJS.MD5(currentUTCDate).toString();
     keyStr = toekn.substr(8, 16);
 }
 const ivStr = "wefjh32o789dsbcv";

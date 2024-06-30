@@ -18,14 +18,6 @@ axio.interceptors.response.use(function(response) {
 })
 
 axio.interceptors.request.use(function (config) {
-    // 这里的config包含每次请求的内容
-
-    // 从cookies中取出token，不要将token存在localstorage中
-    const token = VueCookies.get('token')
-    if (token) {
-        // 添加headers
-        config.headers['Authorization'] = token;
-    }
     return config;
 }, function (err) {
     return Promise.reject(err);
