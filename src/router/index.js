@@ -334,7 +334,7 @@ router.beforeEach((to, from, next) => {
     '/nonHeritagePlanet/imageCreation',
     '/nonHeritagePlanet/QuestionAndAnswer'
   ]
-  const isAuthenticated = this.$cookies.isKey('token')
+  const isAuthenticated = VueCookies.isKey('token')
   if (!isAuthenticated && noLoginPathList.indexOf(to.path) === -1 ) {
     next({ path: '/userProfile/login' })
   } else {
