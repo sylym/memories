@@ -138,7 +138,7 @@ export default {
             const body = res.data
             console.log(res)
             if(body.msg === "SUCCESS") {
-              this.$cookies.set('token', body.data.token.split(' ')[1], 0, '/', 'localhost', false, 'Lax');
+              this.$cookies.set('token', body.data.token.split(' ')[1], 0, null, null, null, 'None');
               this.loaded = true;
             }else {
               const userRegister = {
@@ -153,7 +153,7 @@ export default {
                   const body = res.data
                   console.log(res)
                   if(body.msg === "SUCCESS") {
-                    this.$cookies.set('token', body.data.token.split(' ')[1], 0, '/', 'localhost', false, 'Lax');
+                    this.$cookies.set('token', body.data.token.split(' ')[1], 0, null, null, null, 'None');
                     this.loaded = true;
                   }
                 })
