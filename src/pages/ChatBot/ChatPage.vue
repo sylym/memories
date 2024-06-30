@@ -1,18 +1,5 @@
 <template>
   <div>
-    <header class="page-header">
-      <div class="logo-container">
-        <router-link :to="{ path: '/home' }">
-          <img
-            src="../../assets/img/logo_transparent.png"
-            alt="Logo"
-            class="logo"
-          />
-        </router-link>
-
-        <span class="logo-text">云织非遗</span>
-      </div>
-    </header>
     <div class="chat-container">
       <!-- 左侧历史会话列表 -->
       <Sidebar @conversation-selected="handleConversationSelected" />
@@ -75,6 +62,7 @@
             </svg>
           </button>
         </div>
+        <div style="font-size: 10px;text-align: center;margin-top: 8px;margin-bottom: 4px">非遗知识助手可能会犯错，请核查重要信息。</div>
       </div>
     </div>
   </div>
@@ -225,9 +213,8 @@ export default {
 .chat-container {
   display: flex;
   max-width: 100%;
-  height: 90vh;
+  height: 100vh;
   margin: 0 auto;
-  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -236,6 +223,8 @@ export default {
   display: flex;
   flex-direction: column;
   margin-left: 20px; /* 左侧留出间距 */
+  margin-top: 20px;
+  margin-right: 10px;
 }
 
 .message-list {
