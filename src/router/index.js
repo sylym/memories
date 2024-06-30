@@ -331,7 +331,8 @@ router.beforeEach((to, from, next) => {
     '/exhibition/allWorks/fengxiangranWorks',
     '/exhibition/allWorks/detailsWorks',
     '/nonHeritagePlanet/nonHeritagePlanet',
-    '/nonHeritagePlanet/imageCreation'
+    '/nonHeritagePlanet/imageCreation',
+    '/nonHeritagePlanet/QuestionAndAnswer'
   ]
   const isAuthenticated = VueCookies.isKey('token')
   if (!isAuthenticated && noLoginPathList.indexOf(to.path) === -1 ) {
