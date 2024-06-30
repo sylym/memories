@@ -1,8 +1,9 @@
 <template>
   <div id="artworkPage" style="position: absolute;width: 100%;min-width: 1400px">
-    <jy-tab-bar :is-back="false" :normal-title="normalTitle"></jy-tab-bar>
-    <div class="content">
-      <div class="lineTop"></div>
+    <div v-if="!loaded" style="display: flex; justify-content: center; align-items: center;width: 100%;height: 100vh;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" viewBox="0 0 24 24"><g stroke="#3b488c"><circle cx="12" cy="12" r="9.5" fill="none" stroke-linecap="round" stroke-width="1"><animate attributeName="stroke-dasharray" calcMode="spline" dur="1.5s" keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1" keyTimes="0;0.475;0.95;1" repeatCount="indefinite" values="0 150;42 150;42 150;42 150"/><animate attributeName="stroke-dashoffset" calcMode="spline" dur="1.5s" keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1" keyTimes="0;0.475;0.95;1" repeatCount="indefinite" values="0;-16;-59;-59"/></circle><animateTransform attributeName="transform" dur="2s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></g></svg>
+    </div>
+    <div v-if="loaded" class="content">
       <div class="functions">
         <div style="display: flex;justify-content: space-between;width: 100%">
           <div class="functionCard" @mouseenter="enterShortCard(1)" @mouseleave="leaveShortCard(1)" id="uploadWork" @click="changeUrl(0)">
@@ -84,6 +85,7 @@ import ProgressText from "@/components/DigitalArtwork/ProgressText";
 import jyTabBar from "@/components/tabbar/jyTabbar/jyTabBar";
 import * as API from '@/api'
 import VueCookies from "vue-cookies";
+import {register, userLogin} from "../../api";
 export default {
   name: "DigitalArtwork",
   components: {
@@ -109,10 +111,58 @@ export default {
         "/DigitalArtwork/enroll",
         "/DigitalArtwork/registerRight",
         "/collection"
-      ]
+      ],
+      loaded: false
+    }
+  },
+  created() {
+    if (this.$cookies.isKey('token')) {
+      this.loaded = true;
+    }
+    else {
+      window.addEventListener('message', this.receiveMessage);
     }
   },
   methods: {
+    receiveMessage(event) {
+      console.log(event)
+      if (typeof event.data === "string") {
+        if (event.data.indexOf("|") !== -1){
+          const [username, createdDatetime] = event.data.split("|");
+          const info = username + ' ' + createdDatetime;
+          window.removeEventListener('message', this.receiveMessage);
+          const user = {
+            username: info,
+            password: createdDatetime};
+          userLogin(user).then(res=>{
+            const body = res.data
+            console.log(res)
+            if(body.msg === "SUCCESS") {
+              this.$cookies.set('token', body.data.token.split(' ')[1], 0)
+              this.loaded = true;
+            }else {
+              const userRegister = {
+                username: info,
+                type: 1,
+                password: createdDatetime,
+                phone: info,
+                randomCode: 1234
+              };
+              register(userRegister).then(res=>{
+                userLogin(user).then(res=>{
+                  const body = res.data
+                  console.log(res)
+                  if(body.msg === "SUCCESS") {
+                    this.$cookies.set('token', body.data.token.split(' ')[1], 0)
+                    this.loaded = true;
+                  }
+                })
+              })
+            }
+          })
+        }
+      }
+    },
     enterShortCard(type) {
       switch (type) {   //移动鼠标更改样式
         case 1: {
@@ -226,14 +276,7 @@ export default {
         const realUserInfo = await API.queryUser({ username: userInfo.username })
         this.$store.commit('storageRealUserInfo', realUserInfo)
         console.log(this.$store.state.userInfo)
-        if(this.$store.state.userInfo.isRealName){
-          this.$router.push(this.url[type]).catch()
-        }else{
-          this.$message({
-            message: "您需要实名认证才能够发起该业务",
-            type: "warning"
-          })
-        }
+        this.$router.push(this.url[type]).catch()
       }else{
         this.$router.push(this.url[type]).catch()
       }
@@ -250,9 +293,9 @@ export default {
   background-size: contain; /* 让背景图片充满整个容器 */
   background-position: left center; /* 让背景图片在容器中居中显示 */
   background-repeat: no-repeat; /* 禁止背景图片重复 */
-  margin-top: 50px;
   background-blend-mode: overlay; /* 设置背景图片的混合模式为 overlay */
   z-index: -1;
+  height: 100vh;
 }
 
 </style>

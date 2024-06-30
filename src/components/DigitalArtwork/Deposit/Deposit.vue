@@ -99,17 +99,6 @@
               <div v-for="(item, index) in authors" :key="'authorInfos'+index" class="author" :style="{marginTop: index === 0 ? '' : '28px'}">
                 <p class="authorNum">第{{index+1}}位</p>
                 <div>
-                  <div style="display: flex;align-items: center;justify-content: space-between">
-                    <el-select v-model="item.search" placeholder="请输入用户名/手机号进行查询" :popper-append-to-body="false" style="margin-top: 20px" @change="change(index)" :remote-method="(value)=>{searchAuthor(value,index)}" filterable remote>
-                      <el-option
-                          v-for="(tip, pos) in item.result"
-                          :key="pos"
-                          :label="tip.username + (tip.name !== undefined ? ('（**' + tip.name + '）' + '**************' + tip.identificationNumber) : '')"
-                          :value="pos"> <!--??-->
-                      </el-option>
-                    </el-select>
-                    <p @click="deleteAuthor(index)" class="deleteAuthor">删除</p>
-                  </div>
                   <div style="display: flex;align-items: center;margin-top: 20px">
                     <p class="depositStar">*</p>
                     <p class="depositAuthor">作者署名</p>
@@ -163,10 +152,6 @@
           <div style="display: flex;align-items: flex-start;margin-top: 21px">
             <p>著作权产生方式：</p><p style="width: 170px">{{editForm.copyrightCreateType}}</p>
           </div>
-          <div style="margin-top: 21px">
-            <p style="width: 80px">作者信息：</p>
-            <p v-for="(item, index) in editForm.authorInfos" style="margin-top: 5px">{{index+1}}.&nbsp;{{item}} &nbsp;&nbsp;&nbsp;署名：{{Info.authorInfos[index].signName}}</p>
-          </div>
         </div>
         <div style="height: 20px;width: 1019px"></div>
       </div>
@@ -174,7 +159,7 @@
         <button class="ensureBtn">确认</button>
       </div>
     </div>
-    <finish-work v-show="status === 4">发起作品存证成功</finish-work>
+    <finish-work v-show="status === 4">发起作品存证成功<br>审核通过将通知您</finish-work>
   </div>
 </template>
 
@@ -601,27 +586,8 @@ export default {
             }
           }
           if (flag === 0) {
-            this.loading = true
-            await updateDeposit(this.Info, this.headers).then(res=>{
-              if(res.status === 200) {
-                if(res.data.data !== null) {
-                  that.status++
-                  that.loading = false
-                }else{
-                  that.loading = false
-                  that.$message({
-                    message: "发生了一些错误",
-                    type: "warning"
-                  })
-                }
-              }else{
-                that.loading = false
-                that.$message({
-                  message: "发生了一些错误",
-                  type: "warning"
-                })
-              }
-            })
+            that.status++
+            that.loading = false
           }else{
             this.$message({
               message: "请将信息填写完整",
@@ -638,19 +604,8 @@ export default {
         console.log(this.Info)
         this.loading = true
         await launchDeposit(this.Info, this.headers).then(res=>{
-          console.log(res)
-          if(res.status === 200) {
-            if (res.data.data !== null) {
-              console.log(res)
-              that.status++
-              that.loading = false
-            }else{
-              that.loading = false
-              that.$message.error("发生了一些错误")
-            }
-          }else{
-            that.$message.error("发生了一些错误")
-          }
+          that.status++
+          that.loading = false
         })
       }
     },

@@ -48,17 +48,6 @@
         ></div>
       </div>
     </div>
-    <p class="center">
-      <a href="/home"
-        ><img
-          src="../../../assets/img/logo.png"
-          alt="艺链智绘"
-          style="width: 220px; object-fit: cover"
-      /></a>
-    </p>
-    <div class="right" id="font">
-      <p>联系我们</p>
-    </div>
   </div>
 </template>
 

@@ -2,11 +2,6 @@
   <div id="uploadWork" :style="{marginTop: marginTop}">
     <div class="completeInfo">
       <p class="completeMes"><slot></slot></p>
-      <div class="check">
-        <p class="checkFont">您可以在</p>
-        <p class="myWork" @click="workManage">我的-{{content}}</p>
-        <p class="checkFont">中查看</p>
-      </div>
       <p class="backHome" @click="backHome">返回主页</p>
     </div>
   </div>
@@ -40,9 +35,7 @@ export default {
       }
     },
     backHome() {           // 返回主页
-      if(this.backUrl !== "") {
-        this.$router.replace(this.backUrl)
-      }
+      window.history.back()
     }
   }
 }
