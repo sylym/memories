@@ -336,7 +336,8 @@ router.beforeEach((to, from, next) => {
   ]
   const isAuthenticated = VueCookies.isKey('token')
   if (!isAuthenticated && noLoginPathList.indexOf(to.path) === -1 ) {
-    next({ path: '/userProfile/login' })
+    document.title = to.name
+    next()
   } else {
     document.title = to.name
     next()
