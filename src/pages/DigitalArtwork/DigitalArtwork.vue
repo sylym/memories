@@ -136,6 +136,7 @@ export default {
           userLogin(user).then(res=>{
             const body = res.data;
             if(body.msg === "SUCCESS") {
+              this.$cookies.set('token', body.data.token.split(' ')[1], 0, null,'.ichbupt.cn');
               this.loaded = true;
             }else {
               const userRegister = {
@@ -149,6 +150,7 @@ export default {
                 userLogin(user).then(res=>{
                   const body = res.data
                   if(body.msg === "SUCCESS") {
+                    this.$cookies.set('token', body.data.token.split(' ')[1], 0, null,'.ichbupt.cn');
                     this.loaded = true;
                   }
                 })
