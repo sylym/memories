@@ -125,12 +125,15 @@ export default {
   },
   methods: {
     receiveMessage(event) {
-      console.log(event)
       if (typeof event.data === "string") {
+        if (event.data === "iframe is being destroyed"){
+          window.removeEventListener('message', this.receiveMessage);
+          this.$cookies.remove('token');
+          return;
+        }
         if (event.data.indexOf("|") !== -1){
           const [username, createdDatetime] = event.data.split("|");
           const info = username + ' ' + createdDatetime;
-          window.removeEventListener('message', this.receiveMessage);
           const user = {
             username: info,
             password: createdDatetime};
