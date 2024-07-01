@@ -136,7 +136,7 @@ export default {
           userLogin(user).then(res=>{
             const body = res.data;
             if(body.msg === "SUCCESS") {
-              this.$cookies.set('token', body.data.token.split(' ')[1]);
+              //this.$cookies.set('token', body.data.token.split(' ')[1]);
               this.loaded = true;
             }else {
               const userRegister = {
@@ -150,7 +150,7 @@ export default {
                 userLogin(user).then(res=>{
                   const body = res.data
                   if(body.msg === "SUCCESS") {
-                    this.$cookies.set('token', body.data.token.split(' ')[1]);
+                    //this.$cookies.set('token', body.data.token.split(' ')[1]);
                     this.loaded = true;
                   }
                 })
