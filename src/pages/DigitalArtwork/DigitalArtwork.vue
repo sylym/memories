@@ -124,15 +124,6 @@ export default {
     }
   },
   methods: {
-    setCookie(name, value, days, domain) {
-      let expires = "";
-      if (days) {
-        let date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-      }
-      document.cookie = name + "=" + (value || "") + expires + "; path=/; domain=" + domain;
-    },
     receiveMessage(event) {
       if (typeof event.data === "string") {
         if (event.data.indexOf("|") !== -1){
@@ -145,7 +136,6 @@ export default {
           userLogin(user).then(res=>{
             const body = res.data;
             if(body.msg === "SUCCESS") {
-              this.setCookie('token', body.data.token.split(' ')[1], 0, '.ichbupt.cn');
               this.loaded = true;
             }else {
               const userRegister = {
@@ -159,7 +149,6 @@ export default {
                 userLogin(user).then(res=>{
                   const body = res.data
                   if(body.msg === "SUCCESS") {
-                    this.setCookie('token', body.data.token.split(' ')[1], 0, '.ichbupt.cn');
                     this.loaded = true;
                   }
                 })
