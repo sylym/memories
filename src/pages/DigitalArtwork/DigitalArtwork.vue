@@ -126,22 +126,17 @@ export default {
   methods: {
     receiveMessage(event) {
       if (typeof event.data === "string") {
-        if (event.data === "iframe is being destroyed"){
-          window.removeEventListener('message', this.receiveMessage);
-          this.$cookies.remove('token');
-          return;
-        }
         if (event.data.indexOf("|") !== -1){
           const [username, createdDatetime] = event.data.split("|");
           const info = username + ' ' + createdDatetime;
+          window.removeEventListener('message', this.receiveMessage);
           const user = {
             username: info,
             password: createdDatetime};
           userLogin(user).then(res=>{
-            const body = res.data
-            console.log(res)
+            const body = res.data;
             if(body.msg === "SUCCESS") {
-              this.$cookies.set('token', body.data.token.split(' ')[1], 0);
+              this.$cookies.set('token', body.data.token.split(' ')[1]);
               this.loaded = true;
             }else {
               const userRegister = {
@@ -154,9 +149,8 @@ export default {
               register(userRegister).then(res=>{
                 userLogin(user).then(res=>{
                   const body = res.data
-                  console.log(res)
                   if(body.msg === "SUCCESS") {
-                    this.$cookies.set('token', body.data.token.split(' ')[1], 0);
+                    this.$cookies.set('token', body.data.token.split(' ')[1]);
                     this.loaded = true;
                   }
                 })
