@@ -39,7 +39,7 @@
             </div>
             <div style="display: flex; align-items: center">
               <p>作品文件：{{workInfo.basic.fileName}}</p>
-              <a :href="workInfo.basic.fileUrl" :download="workInfo.basic.fileName" class="downloadBtn">下载</a>
+              <a :href="workInfo.basic.fileUrl" :download="workInfo.basic.fileName" class="downloadBtn" target="_blank">下载</a>
             </div>
           </div>
         </info-card>
@@ -170,9 +170,6 @@
       <div class="pageRight">
         <div class="statusTitle">{{workInfo.status}}</div>
         <step-bar style="margin-top: 25px" :array="statusArray"></step-bar>
-        <div></div>
-        <div class="btn" style="margin-top: 180px" v-if="currentBtn!==-1" @click="changePage(currentBtn)">{{btnArray[currentBtn].name}}</div>
-        <div class="btn" style="border-color: #EA5757;color: #EA5757;margin-top: 8px" v-if="workStatus==='作品存证草稿'" @click="deleteWork">{{btnArray[2].name}}</div>
       </div>
     </div>
   </div>
@@ -204,10 +201,7 @@ export default {
   data() {
     return {
       normalTitle: [
-        {title: "首页", url: "/home"},
-        {title: "数字展馆", url: "/exhibition/exhibitionHome"},
-        {title: "创作者家园", url: "/DigitalArtwork/Work"},
-        {title: "我的", url: "/userProfile/userInfo"}
+        {title: "返回", url: "/userProfile/userInfo/worksManager"}
       ],
       status: [],
       time: [],
@@ -1140,6 +1134,7 @@ export default {
 .background{
   background-color: #F6F6F6;
   width: 100%;
+  height: 100%;
   min-width: 1440px;
   top: 80px;
   position: absolute;
@@ -1147,6 +1142,7 @@ export default {
 }
 .pageLeft{
   width: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

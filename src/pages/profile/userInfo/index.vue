@@ -1,31 +1,17 @@
 <template>
   <el-container style="max-width: 1440px">
-    <el-aside class="aside-wrapper" width="240px">
-      <span class="aside-title aside-text">用户信息管理</span>
-
-      <div class="aside-list">
-        <el-row
-          v-for="(item, index) in asideButtonList"
-          :key="index"
-          :class="{
-            'aside-item': true,
-            'aside-text': true,
-            'active': $route.fullPath.indexOf(item.key) !== -1
-          }"
-        >
-          <div @click="clickAsideButtonHandle(item)">{{item.text}}</div>
-        </el-row>
-      </div>
-
-      <el-button class="aside-text exit-profile" type="text" @click="exitProfile">退出登录</el-button>
-    </el-aside>
     <el-main :style="{ padding: '0px' }">
-      <router-view></router-view>
+      <div v-if="!loaded" style="display: flex; justify-content: center; align-items: center;width: 100%;height: 100vh;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" viewBox="0 0 24 24"><g stroke="#3b488c"><circle cx="12" cy="12" r="9.5" fill="none" stroke-linecap="round" stroke-width="1"><animate attributeName="stroke-dasharray" calcMode="spline" dur="1.5s" keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1" keyTimes="0;0.475;0.95;1" repeatCount="indefinite" values="0 150;42 150;42 150;42 150"/><animate attributeName="stroke-dashoffset" calcMode="spline" dur="1.5s" keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1" keyTimes="0;0.475;0.95;1" repeatCount="indefinite" values="0;-16;-59;-59"/></circle><animateTransform attributeName="transform" dur="2s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></g></svg>
+      </div>
+      <router-view v-if="loaded"></router-view>
     </el-main>
   </el-container>
 </template>
 
 <script>
+import {register, userLogin} from "../../../api";
+
 export default {
   name: "userInfo",
   provide() {
@@ -46,6 +32,7 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       asideActiveKey: '',
       asideButtonList: [
         {
@@ -79,6 +66,12 @@ export default {
     }
   },
   created() {
+    if (this.$cookies.isKey('token')) {
+      this.loaded = true;
+    }
+    else {
+      window.addEventListener('message', this.receiveMessage);
+    }
     console.log(this.$router)
     console.log(this.$route)
     const route = this.$route
@@ -94,6 +87,42 @@ export default {
     })
   },
   methods: {
+    receiveMessage(event) {
+      if (typeof event.data === "string") {
+        if (event.data.indexOf("|") !== -1){
+          const [username, createdDatetime] = event.data.split("|");
+          const info = username + ' ' + createdDatetime;
+          window.removeEventListener('message', this.receiveMessage);
+          const user = {
+            username: info,
+            password: createdDatetime};
+          userLogin(user).then(res=>{
+            const body = res.data;
+            if(body.msg === "SUCCESS") {
+              this.$cookies.set('token', body.data.token.split(' ')[1], 0, null,'.ichbupt.cn');
+              this.loaded = true;
+            }else {
+              const userRegister = {
+                username: info,
+                type: 1,
+                password: createdDatetime,
+                phone: info,
+                randomCode: 1234
+              };
+              register(userRegister).then(res=>{
+                userLogin(user).then(res=>{
+                  const body = res.data
+                  if(body.msg === "SUCCESS") {
+                    this.$cookies.set('token', body.data.token.split(' ')[1], 0, null,'.ichbupt.cn');
+                    this.loaded = true;
+                  }
+                })
+              })
+            }
+          })
+        }
+      }
+    },
     // 点击侧边栏选项，切换到不同的页面
     clickAsideButtonHandle({ key, routePath }) {
       this.asideActiveKey = key

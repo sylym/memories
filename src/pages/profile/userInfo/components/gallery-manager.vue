@@ -86,10 +86,9 @@
                 //     message: '接口尚未准备完成，请等待后续更新！',
                 //     showClose: true
                 // })
-              window.open("/workDetail?workId=" + workId)
-              // this.$router.push({path: "/workDetail", query: {
-              //   workId: workId
-              //   }})
+              this.$router.push({path: "/workDetail", query: {
+                workId: workId
+               }})
             },
             checkSelect(item) {
                 let flag = []

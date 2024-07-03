@@ -1,9 +1,5 @@
 <template>
   <el-container class="user-profile">
-    <el-header class="header">
-      <jy-tab-bar :is-back="false" :normal-title="normalTitle"></jy-tab-bar>
-    </el-header>
-
     <el-container>
       <router-view class="user-profile-content"></router-view>
     </el-container>
